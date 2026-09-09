@@ -421,11 +421,14 @@ function DataQuality() {
             </span>
 
             <strong>
-              Raw Collection
+              Collection
             </strong>
 
             <small>
-              2,014 quotes
+              {Number(
+                qualitySummary.validObservations || 0
+              ).toLocaleString("en-IN")}{" "}
+              observations received
             </small>
 
           </div>
@@ -554,7 +557,7 @@ function DataQuality() {
               </h2>
 
               <p>
-                Current availability and coverage of monitored portals.
+                Current availability and coverage of live data sources.
               </p>
 
             </div>
@@ -819,7 +822,7 @@ function DataQuality() {
               </strong>
 
               <span>
-                Above the current prototype monitoring threshold.
+                Based on the latest collection cycle.
               </span>
 
             </div>
@@ -934,18 +937,6 @@ function DataQuality() {
         </div>
 
       </section>
-
-
-      {/* =====================================================
-          MOCK NOTICE
-      ===================================================== */}
-
-      <div className="mock-data-note">
-
-        Prototype Data Quality dashboard · Values shown are
-        mock frontend data.
-
-      </div>
 
     </div>
   );

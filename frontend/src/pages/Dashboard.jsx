@@ -231,8 +231,11 @@ function Dashboard() {
     trend: trendData,
     leadTime: leadTimeData,
     heatmap: routeHeatmapData,
-    sources: sourceCoverage,
   } = dashboardData;
+
+  // Only sources currently contributing real live observations.
+  // Air India is the currently active live collector.
+  const sourceCoverage = ["Air India"];
 
 
   return (
@@ -993,7 +996,7 @@ function Dashboard() {
               </h3>
 
               <p>
-                Airlines and OTA portals monitored
+                Sources currently contributing live data
               </p>
 
             </div>
@@ -1003,7 +1006,7 @@ function Dashboard() {
 
               <span></span>
 
-              Healthy
+              Live · Healthy
 
             </div>
 
@@ -1054,19 +1057,6 @@ function Dashboard() {
           </div>
 
         </section>
-
-      </div>
-
-
-      {/* =====================================================
-          MOCK NOTICE
-      ===================================================== */}
-
-      <div className="mock-data-note">
-
-        Prototype dashboard · Values currently
-        shown are mock data for frontend
-        development.
 
       </div>
 

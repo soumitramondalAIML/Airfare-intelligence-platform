@@ -358,11 +358,11 @@
 
 .window-field {
   grid-area: window;
+  min-width: 0;
 }
 
 .period-field {
   grid-area: period;
-
   min-width: 0;
 }
 
@@ -1089,15 +1089,21 @@
 
 @media (max-width: 1250px) {
 
+  .aviation-hero {
+    min-height: 470px;
+    padding-bottom: 120px;
+  }
+
   .route-search-grid {
     grid-template-columns:
       minmax(0, 1fr)
       38px
+      minmax(0, 1fr)
       minmax(0, 1fr);
 
     grid-template-areas:
-      "origin swap destination"
-      "window period analyse";
+      "origin swap destination destination"
+      "window window period analyse";
   }
 
   .premium-stats-grid {

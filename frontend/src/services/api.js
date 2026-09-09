@@ -20,231 +20,6 @@ import {
 } from "../data/mockData";
 
 /* =====================================================
-   FULL DATA QUALITY DATASET
-===================================================== */
-
-export async function getQualityData() {
-
-  /* -----------------------------
-     MOCK MODE
-  ----------------------------- */
-
-  if (API_MODE === "mock") {
-
-    await mockDelay();
-
-    return {
-      summary: qualitySummary,
-      sources: sourceHealthData,
-      trend: dailyQualityTrend,
-      issues: qualityIssues,
-    };
-  }
-
-
-  /* -----------------------------
-     REAL API MODE
-  ----------------------------- */
-
-  const response =
-    await apiClient.get(
-      "/quality/status"
-    );
-
-
-  const data =
-    response.data || {};
-
-
-  /* =====================================================
-     SUMMARY NORMALISATION
-  ===================================================== */
-
-  const summarySource =
-    data.summary || data;
-
-
-  const summary = {
-
-    collectionHealth:
-      summarySource.collectionHealth ??
-      summarySource.collection_health ??
-      summarySource.coverage_pct ??
-      0,
-
-
-    validObservations:
-      summarySource.validObservations ??
-      summarySource.valid_observations ??
-      0,
-
-
-    flaggedRecords:
-      summarySource.flaggedRecords ??
-      summarySource.flagged_records ??
-      0,
-
-
-    missingQuotes:
-      summarySource.missingQuotes ??
-      summarySource.missing_quotes ??
-      0,
-
-
-    duplicateRecords:
-      summarySource.duplicateRecords ??
-      summarySource.duplicate_records ??
-      0,
-
-
-    outliersRemoved:
-      summarySource.outliersRemoved ??
-      summarySource.outliers_removed ??
-      0,
-  };
-
-
-  /* =====================================================
-     SOURCE HEALTH NORMALISATION
-  ===================================================== */
-
-  const rawSources =
-    data.sources || [];
-
-
-  const sources =
-    rawSources.map(
-      (source) => ({
-
-        source:
-          source.source ??
-          source.name ??
-          "",
-
-
-        type:
-          source.type ??
-          source.source_type ??
-          "",
-
-
-        status:
-          source.status ??
-          "Unknown",
-
-
-        coverage:
-          source.coverage ??
-          source.coverage_pct ??
-          0,
-
-
-        records:
-          source.records ??
-          source.record_count ??
-          0,
-
-
-        lastUpdate:
-          source.lastUpdate ??
-          source.last_update ??
-          source.updated_at ??
-          "",
-      })
-    );
-
-
-  /* =====================================================
-     QUALITY TREND NORMALISATION
-  ===================================================== */
-
-  const rawTrend =
-    data.trend ||
-    data.daily_quality_trend ||
-    [];
-
-
-  const trend =
-    rawTrend.map(
-      (item) => ({
-
-        date:
-          item.date ??
-          "",
-
-        coverage:
-          item.coverage ??
-          item.coverage_pct ??
-          0,
-      })
-    );
-
-
-  /* =====================================================
-     QUALITY ISSUES NORMALISATION
-  ===================================================== */
-
-  const rawIssues =
-    data.issues ||
-    data.quality_issues ||
-    [];
-
-
-  const issues =
-    rawIssues.map(
-      (issue) => ({
-
-        id:
-          issue.id ??
-          issue.issue_id ??
-          "",
-
-
-        type:
-          issue.type ??
-          issue.issue_type ??
-          "",
-
-
-        source:
-          issue.source ??
-          "",
-
-
-        route:
-          issue.route ??
-          "",
-
-
-        window:
-          issue.window ??
-          issue.purchase_window ??
-          "",
-
-
-        severity:
-          issue.severity ??
-          "Low",
-
-
-        action:
-          issue.action ??
-          issue.resolution ??
-          "",
-      })
-    );
-
-
-  return {
-    summary,
-    sources,
-    trend,
-    issues,
-  };
-}
-
-
-/* =====================================================
    API CONFIGURATION
 ===================================================== */
 
@@ -331,40 +106,45 @@ export async function getDashboardData() {
      REAL API MODE
   ----------------------------- */
 
- const [
-  currentIndexResponse,
-  historyResponse,
-  routesResponse,
-  qualityResponse,
-  leadTimeResponse,
-] = await Promise.all([
+  const [
+    currentIndexResponse,
+    historyResponse,
+    routesResponse,
+    qualityResponse,
+    leadTimeResponse,
+    scraperHealthResponse,
+  ] = await Promise.all([
 
-  apiClient.get(
-    "/index/current"
-  ),
+    apiClient.get(
+      "/index/current"
+    ),
 
-  apiClient.get(
-    "/index/history",
-    {
-      params: {
-        frequency: "daily",
-      },
-    }
-  ),
+    apiClient.get(
+      "/index/history",
+      {
+        params: {
+          frequency: "daily",
+        },
+      }
+    ),
 
-  apiClient.get(
-    "/routes"
-  ),
+    apiClient.get(
+      "/routes"
+    ),
 
-  apiClient.get(
-    "/quality/status"
-  ),
+    apiClient.get(
+      "/quality/status"
+    ),
 
-  apiClient.get(
-    "/routes/DEL/BOM"
-  ),
+    apiClient.get(
+      "/routes/DEL/BOM"
+    ),
 
-]);
+    apiClient.get(
+      "/scrapers/health"
+    ),
+
+  ]);
 
 
   const current =
@@ -382,6 +162,9 @@ export async function getDashboardData() {
   const leadTimeRoute =
     leadTimeResponse.data || {};
 
+  const scraperHealth =
+    scraperHealthResponse.data || {};
+
 
   /* -----------------------------
      DASHBOARD STATS
@@ -394,30 +177,25 @@ export async function getDashboardData() {
       current.current_index ??
       0,
 
-
     dailyChange:
       current.dailyChange ??
       current.daily_change_pct ??
       0,
-
 
     weeklyChange:
       current.weeklyChange ??
       current.weekly_change_pct ??
       0,
 
-
     monthlyChange:
       current.monthlyChange ??
       current.monthly_change_pct ??
       0,
 
-
     averageFare:
       current.averageFare ??
       current.average_fare ??
       0,
-
 
     sourceCoverage:
       quality.coverage ??
@@ -438,12 +216,10 @@ export async function getDashboardData() {
       quality.observations_today ??
       0,
 
-
     activeSources:
-      quality.activeSources ??
-      quality.active_sources ??
+      scraperHealth.eligibleSources ??
+      scraperHealth.eligible_sources ??
       0,
-
 
     lastUpdated:
       current.lastUpdated ??
@@ -460,7 +236,6 @@ export async function getDashboardData() {
   const rawTrend =
     history.observations || [];
 
-
   const trend =
     rawTrend.map(
       (item) => ({
@@ -476,149 +251,140 @@ export async function getDashboardData() {
     );
 
 
-  const leadTime =
-  (
-    leadTimeRoute.lead_time_fares ||
-    []
-  ).map(
-    (item) => ({
-      window:
-        `T+${item.advance_days}`,
-
-      fare:
-        item.average_fare ?? 0,
-    })
-  );
-
-
   /* -----------------------------
-   ROUTE HEATMAP
------------------------------ */
+     LEAD TIME
+  ----------------------------- */
 
-const rawRoutes =
-  Array.isArray(routes)
-    ? routes
-    : routes.routes || [];
+  const leadTime =
+    (
+      leadTimeRoute.lead_time_fares ||
+      []
+    ).map(
+      (item) => ({
 
+        window:
+          `T+${item.advance_days}`,
 
-const heatmap =
-  rawRoutes
-    .map((item) => {
-
-      const origin =
-        item.origin ??
-        item.origin_code ??
-        "";
-
-      const destination =
-        item.destination ??
-        item.destination_code ??
-        "";
-
-
-      const routeCode =
-        item.route ??
-        (
-          origin &&
-          destination
-            ? `${origin}-${destination}`
-            : ""
-        );
-
-
-      const rawWindows =
-        item.windows ??
-        item.movements ??
-        item.window_changes ??
-        {};
-
-
-      return {
-
-        route:
-          routeCode,
-
-
-        cityPair:
-          item.cityPair ??
-          item.city_pair ??
-          (
-            origin &&
-            destination
-              ? `${origin} → ${destination}`
-              : routeCode
-          ),
-
-
-        windows: {
-
-          "T+45":
-            rawWindows["T+45"] ??
-            rawWindows.t45 ??
-            null,
-
-          "T+30":
-            rawWindows["T+30"] ??
-            rawWindows.t30 ??
-            null,
-
-          "T+15":
-            rawWindows["T+15"] ??
-            rawWindows.t15 ??
-            null,
-
-          "T+7":
-            rawWindows["T+7"] ??
-            rawWindows.t7 ??
-            null,
-
-          "T+1":
-            rawWindows["T+1"] ??
-            rawWindows.t1 ??
-            null,
-        },
-      };
-
-    })
-    .filter(
-      (item) =>
-        item.route
+        fare:
+          item.average_fare ?? 0,
+      })
     );
 
 
-/* -----------------------------
-   SOURCE COVERAGE
------------------------------ */
+  /* -----------------------------
+     ROUTE HEATMAP
+  ----------------------------- */
 
-const sources =
-  (
-    quality.sources || []
-  )
-    .map(
-      (source) => {
+  const rawRoutes =
+    Array.isArray(routes)
+      ? routes
+      : routes.routes || [];
 
-        if (typeof source === "string") {
-          return source;
-        }
 
-        return (
-          source.name ??
+  const heatmap =
+    rawRoutes
+      .map((item) => {
+
+        const origin =
+          item.origin ??
+          item.origin_code ??
+          "";
+
+        const destination =
+          item.destination ??
+          item.destination_code ??
+          "";
+
+        const routeCode =
+          item.route ??
+          (
+            origin &&
+            destination
+              ? `${origin}-${destination}`
+              : ""
+          );
+
+        const rawWindows =
+          item.windows ??
+          item.movements ??
+          item.window_changes ??
+          {};
+
+
+        return {
+
+          route:
+            routeCode,
+
+          cityPair:
+            item.cityPair ??
+            item.city_pair ??
+            (
+              origin &&
+              destination
+                ? `${origin} → ${destination}`
+                : routeCode
+            ),
+
+          windows: {
+
+            "T+45":
+              rawWindows["T+45"] ??
+              rawWindows.t45 ??
+              null,
+
+            "T+30":
+              rawWindows["T+30"] ??
+              rawWindows.t30 ??
+              null,
+
+            "T+15":
+              rawWindows["T+15"] ??
+              rawWindows.t15 ??
+              null,
+
+            "T+7":
+              rawWindows["T+7"] ??
+              rawWindows.t7 ??
+              null,
+
+            "T+1":
+              rawWindows["T+1"] ??
+              rawWindows.t1 ??
+              null,
+          },
+        };
+
+      })
+      .filter(
+        (item) =>
+          item.route
+      );
+
+
+  /* -----------------------------
+     LIVE SOURCE COVERAGE
+  ----------------------------- */
+
+  const sources =
+    (scraperHealth.sources || [])
+      .map(
+        (source) =>
           source.source ??
+          source.name ??
           ""
-        );
-      }
-    )
-    .filter(Boolean);
+      )
+      .filter(Boolean);
 
 
-return {
-  stats,
-  system,
-  trend,
-  leadTime,
-  heatmap,
-  sources,
-};
+  return {
+    stats,
+    system,
+    trend,
+    leadTime,
+    heatmap,
+    sources,
+  };
 }
 
 
@@ -689,8 +455,7 @@ export async function getIndexHistory(
 
 
   return (
-    response.data
-      .observations || []
+    response.data?.observations || []
   );
 }
 
@@ -715,10 +480,10 @@ export async function getRoutes() {
     );
 
 
- return (
-  Array.isArray(response.data)
-    ? response.data
-    : response.data?.routes || []
+  return (
+    Array.isArray(response.data)
+      ? response.data
+      : response.data?.routes || []
   );
 }
 
@@ -754,7 +519,6 @@ export async function getRouteAnalytics(
       throw new Error(
         `No route analytics found for ${route}`
       );
-
     }
 
 
@@ -784,17 +548,12 @@ export async function getRouteAnalytics(
     response.data;
 
 
-  /*
-    Convert backend snake_case fields into
-    the camelCase structure expected by React.
-  */
-
   return {
 
     origin:
       (
-        typeof data.origin === "object"
-        && data.origin !== null
+        typeof data.origin === "object" &&
+        data.origin !== null
       )
         ? data.origin
         : {
@@ -814,32 +573,32 @@ export async function getRouteAnalytics(
 
 
     destination:
-  (
-    typeof data.destination === "object"
-    && data.destination !== null
-  )
-    ? data.destination
-    : {
-        code:
-          data.destination ||
-          destination,
+      (
+        typeof data.destination === "object" &&
+        data.destination !== null
+      )
+        ? data.destination
+        : {
+            code:
+              data.destination ||
+              destination,
 
-        city:
-          data.destination_city ||
-          data.destination ||
-          destination,
+            city:
+              data.destination_city ||
+              data.destination ||
+              destination,
 
-        airport:
-          data.destination_airport ||
-          "",
-      },
+            airport:
+              data.destination_airport ||
+              "",
+          },
 
 
-   currentIndex:
-     data.current_index ??
-     data.route_index ??
-     data.index_value ??
-     0,
+    currentIndex:
+      data.current_index ??
+      data.route_index ??
+      data.index_value ??
+      0,
 
 
     change:
@@ -883,10 +642,8 @@ export async function getRouteAnalytics(
         0,
 
       convenienceFee:
-        data.fare_breakdown
-          ?.convenience_fee ??
-        data.fareBreakdown
-          ?.convenienceFee ??
+        data.fare_breakdown?.convenience_fee ??
+        data.fareBreakdown?.convenienceFee ??
         0,
     },
 
@@ -959,20 +716,8 @@ export async function getFares(
     response.data?.observations || [];
 
 
-  /*
-    Convert backend snake_case fields
-    into the camelCase structure used
-    by FareExplorer.jsx.
-  */
-
   return observations.map(
     (fare) => {
-
-      /*
-        Some backend implementations may
-        return route as "DEL-BOM" instead
-        of separate origin/destination.
-      */
 
       const routeParts =
         fare.route?.split("-") || [];
@@ -1071,7 +816,6 @@ export async function getFares(
           fare.source_url ??
           "",
       };
-
     }
   );
 }
@@ -1079,6 +823,279 @@ export async function getFares(
 
 /* =====================================================
    DATA QUALITY
+===================================================== */
+
+export async function getQualityData() {
+
+  /* -----------------------------
+     MOCK MODE
+  ----------------------------- */
+
+  if (API_MODE === "mock") {
+
+    await mockDelay();
+
+    return {
+      summary: qualitySummary,
+      sources: sourceHealthData,
+      trend: dailyQualityTrend,
+      issues: qualityIssues,
+    };
+  }
+
+
+  /* -----------------------------
+     REAL API MODE
+  ----------------------------- */
+
+  /*
+    We call BOTH endpoints.
+
+    /quality/status
+      -> quality summary, trend and issues
+
+    /scrapers/health
+      -> live source health and collection status
+  */
+
+  const [
+    qualityResponse,
+    scraperHealthResponse,
+  ] = await Promise.all([
+
+    apiClient.get(
+      "/quality/status"
+    ),
+
+    apiClient.get(
+      "/scrapers/health"
+    ),
+
+  ]);
+
+
+  const data =
+    qualityResponse.data || {};
+
+  const scraperHealth =
+    scraperHealthResponse.data || {};
+
+
+  /* =====================================================
+     SUMMARY NORMALISATION
+  ===================================================== */
+
+  const summarySource =
+    data.summary || data;
+
+
+  const summary = {
+
+    collectionHealth:
+      summarySource.collectionHealth ??
+      summarySource.collection_health ??
+      summarySource.coverage_pct ??
+      0,
+
+
+    validObservations:
+      summarySource.validObservations ??
+      summarySource.valid_observations ??
+      0,
+
+
+    flaggedRecords:
+      summarySource.flaggedRecords ??
+      summarySource.flagged_records ??
+      0,
+
+
+    missingQuotes:
+      summarySource.missingQuotes ??
+      summarySource.missing_quotes ??
+      0,
+
+
+    duplicateRecords:
+      summarySource.duplicateRecords ??
+      summarySource.duplicate_records ??
+      0,
+
+
+    outliersRemoved:
+      summarySource.outliersRemoved ??
+      summarySource.outliers_removed ??
+      0,
+  };
+
+
+  /* =====================================================
+     SOURCE HEALTH NORMALISATION
+  ===================================================== */
+
+  const rawSources =
+    scraperHealth.sources || [];
+
+
+  const sources =
+    rawSources.map(
+      (source) => ({
+
+        source:
+          source.source ??
+          source.name ??
+          "",
+
+
+        type:
+          source.sourceType ??
+          source.source_type ??
+          source.type ??
+          "",
+
+
+        status:
+          source.status ??
+          "Unknown",
+
+
+        coverage:
+          source.coveragePct ??
+          source.coverage_pct ??
+          source.coverage ??
+          0,
+
+
+        records:
+          source.storedObservations ??
+          source.stored_observations ??
+          source.recordCount ??
+          source.record_count ??
+          0,
+
+
+        lastUpdate:
+          source.lastObservationAt ??
+          source.last_observation_at ??
+          source.updated_at ??
+          "",
+      })
+    );
+
+
+  /* =====================================================
+     QUALITY TREND NORMALISATION
+  ===================================================== */
+
+  const rawTrend =
+    data.trend ||
+    data.daily_quality_trend ||
+    [];
+
+
+  const trend =
+    rawTrend.map(
+      (item) => ({
+
+        date:
+          item.date ??
+          item.day ??
+          "",
+
+
+        coverage:
+          item.coverage ??
+          item.coverage_pct ??
+          item.coveragePct ??
+          0,
+
+
+        records:
+          item.records ??
+          item.record_count ??
+          item.recordCount ??
+          0,
+      })
+    );
+
+
+  /* =====================================================
+     QUALITY ISSUES NORMALISATION
+  ===================================================== */
+
+  const rawIssues =
+    data.issues ||
+    data.quality_issues ||
+    [];
+
+
+  const issues =
+    rawIssues.map(
+      (issue) => ({
+
+        id:
+          issue.id ??
+          issue.issue_id ??
+          "",
+
+
+        type:
+          issue.type ??
+          issue.issue_type ??
+          "Quality",
+
+
+        source:
+          issue.source ??
+          "",
+
+
+        route:
+          issue.route ??
+          "",
+
+
+        window:
+          issue.window ??
+          issue.purchase_window ??
+          "",
+
+
+        severity:
+          issue.severity ??
+          "Low",
+
+
+        action:
+          issue.action ??
+          issue.resolution ??
+          "",
+
+
+        message:
+          issue.message ??
+          issue.description ??
+          "",
+
+
+        count:
+          issue.count ??
+          0,
+      })
+    );
+
+
+  return {
+    summary,
+    sources,
+    trend,
+    issues,
+  };
+}
+
+
+/* =====================================================
+   DATA QUALITY STATUS
 ===================================================== */
 
 export async function getQualityStatus() {
@@ -1111,11 +1128,6 @@ export async function getQualityStatus() {
 
   return response.data;
 }
-
-
-/* =====================================================
-   API HEALTH
-===================================================== */
 
 
 /* =====================================================
@@ -1155,71 +1167,86 @@ export async function getScraperHealth() {
 
         source:
           source.source ??
+          source.name ??
           "",
+
 
         sourceCode:
           source.sourceCode ??
           source.source_code ??
           "",
 
+
         sourceType:
           source.sourceType ??
           source.source_type ??
           "",
 
+
         status:
           source.status ??
           "unknown",
+
 
         latestRunStatus:
           source.latestRunStatus ??
           source.latest_run_status ??
           "unknown",
 
+
         latestRunStartedAt:
           source.latestRunStartedAt ??
           source.latest_run_started_at ??
           null,
+
 
         latestRunFinishedAt:
           source.latestRunFinishedAt ??
           source.latest_run_finished_at ??
           null,
 
+
         lastSuccessfulRun:
           source.lastSuccessfulRun ??
           source.last_successful_run ??
           null,
+
 
         lastObservationAt:
           source.lastObservationAt ??
           source.last_observation_at ??
           null,
 
+
         latestCollectionDate:
           source.latestCollectionDate ??
           source.latest_collection_date ??
           null,
+
 
         storedObservations:
           source.storedObservations ??
           source.stored_observations ??
           0,
 
+
         expectedObservations:
           source.expectedObservations ??
           source.expected_observations ??
           0,
+
 
         coveragePct:
           source.coveragePct ??
           source.coverage_pct ??
           0,
 
+
         dataAgeHours:
           source.dataAgeHours ??
           source.data_age_hours ??
           null,
+
 
         errorMessage:
           source.errorMessage ??
@@ -1236,33 +1263,44 @@ export async function getScraperHealth() {
       data.overall_status ??
       "unknown",
 
+
     dataMode:
       data.dataMode ??
       data.data_mode ??
       "unknown",
+
 
     syntheticIncluded:
       data.syntheticIncluded ??
       data.synthetic_included ??
       false,
 
+
     eligibleSources:
       data.eligibleSources ??
       data.eligible_sources ??
       sources.length,
+
 
     expectedObservationsPerCollection:
       data.expectedObservationsPerCollection ??
       data.expected_observations_per_collection ??
       0,
 
+
     sources,
   };
 }
 
+
+/* =====================================================
+   API HEALTH
+===================================================== */
+
 export async function checkApiHealth() {
 
   if (API_MODE === "mock") {
+
     return {
       status: "mock",
       available: true,
@@ -1279,6 +1317,7 @@ export async function checkApiHealth() {
 
 
     return {
+
       status:
         response.data?.status ??
         "online",
@@ -1298,13 +1337,14 @@ export async function checkApiHealth() {
       status: "offline",
       available: false,
     };
-
   }
 }
+
 
 /* =====================================================
    DGCA BACK-TEST DATA
 ===================================================== */
+
 export async function getBacktestData() {
 
   /* -----------------------------
@@ -1316,6 +1356,7 @@ export async function getBacktestData() {
     await mockDelay();
 
     return {
+
       status: "mock",
 
       dataNote:
@@ -1327,7 +1368,8 @@ export async function getBacktestData() {
       dgcaStatus:
         "mock",
 
-      summary: backtestSummary,
+      summary:
+        backtestSummary,
 
       comparisonTrend:
         dgcaBacktestTrend,
@@ -1436,7 +1478,8 @@ export async function getBacktestData() {
       (item) => ({
 
         route:
-          item.route ?? "",
+          item.route ??
+          "",
 
 
         observedAverage:
@@ -1488,55 +1531,65 @@ export async function getBacktestData() {
 
 
   return {
+
     status:
       data.status ??
       "",
+
 
     dataNote:
       data.dataNote ??
       data.data_note ??
       "",
 
+
     validationType:
       data.validationType ??
       data.validation_type ??
       "",
+
 
     statisticalErrorComparable:
       data.statisticalErrorComparable ??
       data.statistical_error_comparable ??
       false,
 
+
     dgcaStatus:
       data.dgca?.status ??
       "reference_data_pending",
+
 
     dgcaNote:
       data.dgca?.dataNote ??
       data.dgca?.data_note ??
       "",
 
+
     referenceValidation:
       data.referenceValidation ??
       data.reference_validation ??
       {},
 
+
     summary,
+
 
     comparisonTrend:
       data.comparisonTrend ??
       data.comparison_trend ??
       [],
 
+
     errorTrend:
       data.errorTrend ??
       data.error_trend ??
       [],
 
+
     routeComparison,
   };
 }
-
 
 
 /* =====================================================
