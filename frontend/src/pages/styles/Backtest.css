@@ -1,0 +1,990 @@
+/* =====================================================
+   DGCA BACKTEST PAGE
+===================================================== */
+
+.backtest-page {
+  width: 100%;
+  max-width: var(--page-max-width);
+
+  margin: 0 auto;
+  padding-top: 28px;
+}
+
+
+/* =====================================================
+   PAGE HEADING
+===================================================== */
+
+.backtest-page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+.backtest-page-heading > div > span,
+.backtest-section-heading > div > span {
+  color: var(--color-accent-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.backtest-page-heading h1 {
+  margin:
+    4px
+    0;
+
+  color: var(--color-text);
+
+  font-family: var(--font-display);
+
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.backtest-page-heading p {
+  margin: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   VALIDATION BADGE
+===================================================== */
+
+.backtest-validation-badge {
+  flex-shrink: 0;
+
+  padding:
+    8px
+    10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  background: var(--color-olive-soft);
+
+  border:
+    1px solid
+    #ccd7c7;
+
+  border-radius: var(--radius-sm);
+
+  color: #567055;
+
+  font-size: 8px;
+}
+
+
+/* =====================================================
+   VALIDATION PERIOD
+===================================================== */
+
+.backtest-period-panel {
+  min-height: 92px;
+
+  padding:
+    17px
+    20px;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-bottom: 13px;
+
+  background: var(--color-charcoal);
+
+  border-radius: 10px;
+}
+
+.backtest-period-icon {
+  width: 39px;
+  height: 39px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 7px;
+
+  background: #35362f;
+
+  color: #d48653;
+}
+
+.backtest-period-main {
+  min-width: 0;
+}
+
+.backtest-period-main > span {
+  color: #8d8f86;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.backtest-period-main > div {
+  margin-top: 7px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.backtest-period-main strong {
+  flex-shrink: 0;
+
+  color: #fffaf1;
+
+  font-family: var(--font-display);
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+/* =====================================================
+   PERIOD LINE
+===================================================== */
+
+.period-line {
+  min-width: 40px;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+}
+
+.period-line > span {
+  width: 100%;
+
+  border-top:
+    1px dashed
+    #65665f;
+}
+
+
+/* =====================================================
+   NUMBER OF DAYS
+===================================================== */
+
+.backtest-days {
+  min-width: 65px;
+
+  padding-left: 18px;
+
+  border-left:
+    1px solid
+    #454640;
+
+  text-align: center;
+}
+
+.backtest-days strong {
+  display: block;
+
+  color: #d68652;
+
+  font-family: var(--font-display);
+
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.backtest-days span {
+  color: #81837a;
+
+  font-size: 7px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   SUMMARY GRID
+===================================================== */
+
+.backtest-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+}
+
+.backtest-summary-grid article {
+  min-width: 0;
+  min-height: 112px;
+
+  padding: 17px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  background: var(--color-paper);
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  box-shadow: var(--shadow-card);
+}
+
+.backtest-summary-grid article > svg {
+  flex-shrink: 0;
+
+  color: var(--color-accent);
+}
+
+.backtest-summary-grid article:nth-child(1) > svg,
+.backtest-summary-grid article:nth-child(3) > svg {
+  color: var(--color-success);
+}
+
+.backtest-summary-grid span {
+  display: block;
+
+  color: #898279;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+}
+
+.backtest-summary-grid strong {
+  display: block;
+
+  margin:
+    5px
+    0;
+
+  color: var(--color-text);
+
+  font-family: var(--font-display);
+
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.backtest-summary-grid small {
+  color: var(--color-text-muted);
+
+  font-size: 7px;
+}
+
+
+/* =====================================================
+   GENERAL BACKTEST PANEL
+===================================================== */
+
+.backtest-panel {
+  min-width: 0;
+
+  padding: 18px;
+
+  margin-bottom: 14px;
+
+  background: var(--color-paper);
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-card);
+}
+
+
+/* =====================================================
+   SECTION HEADING
+===================================================== */
+
+.backtest-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.backtest-section-heading h2 {
+  margin:
+    4px
+    0
+    3px;
+
+  color: #30312b;
+
+  font-family: var(--font-display);
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.backtest-section-heading p {
+  margin: 0;
+
+  color: var(--color-text-muted);
+
+  font-size: 8px;
+}
+
+.comparison-legend-note {
+  flex-shrink: 0;
+
+  padding:
+    6px
+    8px;
+
+  background: #f1ece4;
+
+  border-radius: 5px;
+
+  color: #706a61;
+
+  font-size: 7px;
+}
+
+
+/* =====================================================
+   MAIN COMPARISON CHART
+===================================================== */
+
+.backtest-main-chart {
+  width: 100%;
+  height: 330px;
+
+  margin-top: 19px;
+}
+
+
+/* =====================================================
+   CHART EXPLANATION
+===================================================== */
+
+.backtest-chart-explanation {
+  margin-top: 7px;
+
+  padding:
+    10px
+    11px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 8px;
+
+  background: #f1ece4;
+
+  border-radius: var(--radius-sm);
+
+  color: #766f66;
+}
+
+.backtest-chart-explanation svg {
+  flex-shrink: 0;
+
+  color: #a85a30;
+}
+
+.backtest-chart-explanation p {
+  margin: 0;
+
+  font-size: 7px;
+
+  line-height: 12px;
+}
+
+
+/* =====================================================
+   SECONDARY ANALYSIS GRID
+===================================================== */
+
+.backtest-analysis-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(280px, 0.65fr);
+
+  gap: 14px;
+}
+
+
+/* =====================================================
+   ERROR CHART
+===================================================== */
+
+.backtest-error-chart {
+  width: 100%;
+  height: 255px;
+
+  margin-top: 17px;
+}
+
+
+/* =====================================================
+   VALIDATION PANEL
+===================================================== */
+
+.validation-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =====================================================
+   VALIDATION SCORE
+===================================================== */
+
+.validation-score {
+  margin-top: 18px;
+
+  text-align: center;
+}
+
+.validation-score-ring {
+  width: 105px;
+  height: 105px;
+
+  margin: 0 auto;
+
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      var(--color-olive)
+      0deg
+      338deg,
+
+      #e6e0d7
+      338deg
+      360deg
+    );
+}
+
+.validation-score-ring::after {
+  content: "";
+
+  position: absolute;
+
+  width: 79px;
+  height: 79px;
+
+  border-radius: 50%;
+
+  background: var(--color-paper);
+}
+
+.validation-score-ring > div {
+  position: relative;
+
+  z-index: 2;
+}
+
+.validation-score-ring strong {
+  color: #30322c;
+
+  font-family: var(--font-display);
+
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.validation-score-ring span {
+  color: var(--color-text-muted);
+
+  font-size: 8px;
+}
+
+.validation-score > strong {
+  display: block;
+
+  margin-top: 11px;
+
+  color: #3e4038;
+
+  font-size: 10px;
+}
+
+.validation-score > p {
+  max-width: 245px;
+
+  margin:
+    5px
+    auto
+    0;
+
+  color: var(--color-text-muted);
+
+  font-size: 7px;
+
+  line-height: 12px;
+}
+
+
+/* =====================================================
+   VALIDATION CHECKS
+===================================================== */
+
+.validation-checks {
+  margin-top: 17px;
+}
+
+.validation-checks > div {
+  min-height: 33px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  border-top:
+    1px solid
+    var(--color-border-light);
+
+  color: #69675f;
+
+  font-size: 7px;
+}
+
+.validation-checks svg {
+  flex-shrink: 0;
+
+  color: var(--color-success);
+}
+
+
+/* =====================================================
+   ROUTE COMPARISON TABLE
+===================================================== */
+
+.backtest-route-table {
+  margin-top: 16px;
+}
+
+.backtest-route-header,
+.backtest-route-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(100px, 1fr)
+    minmax(120px, 1fr)
+    minmax(120px, 1fr)
+    minmax(90px, 0.75fr)
+    minmax(90px, 0.8fr);
+
+  gap: 10px;
+
+  align-items: center;
+}
+
+.backtest-route-header {
+  min-height: 32px;
+
+  padding:
+    0
+    10px;
+
+  background: #f1ede5;
+
+  border-radius: 5px;
+
+  color: #898279;
+
+  font-size: 7px;
+  font-weight: 800;
+}
+
+.backtest-route-row {
+  min-height: 51px;
+
+  padding:
+    0
+    10px;
+
+  border-bottom:
+    1px solid
+    var(--color-border-light);
+
+  color: #5f5c55;
+
+  font-size: 8px;
+}
+
+.backtest-route-row:last-child {
+  border-bottom: 0;
+}
+
+.backtest-route-row > strong:first-child {
+  color: #393a34;
+}
+
+
+/* =====================================================
+   DIFFERENCE VALUES
+===================================================== */
+
+.backtest-good-value {
+  color: var(--color-success);
+}
+
+.backtest-review-value {
+  color: var(--color-danger);
+}
+
+
+/* =====================================================
+   ASSESSMENT BADGES
+===================================================== */
+
+.backtest-assessment {
+  width: fit-content;
+
+  padding:
+    4px
+    6px;
+
+  border-radius: var(--radius-xs);
+
+  font-size: 6.5px;
+  font-weight: 700;
+}
+
+.backtest-assessment.close {
+  background: var(--color-olive-soft);
+
+  color: #597159;
+}
+
+.backtest-assessment.moderate {
+  background: #f2e7da;
+
+  color: #98603a;
+}
+
+.backtest-assessment.review {
+  background: #eedbd4;
+
+  color: #a4473b;
+}
+
+
+/* =====================================================
+   PROTOTYPE WARNING
+===================================================== */
+
+.backtest-warning {
+  margin-bottom: 15px;
+
+  padding: 12px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 8px;
+
+  border:
+    1px solid
+    #e3cdbd;
+
+  border-radius: 7px;
+
+  background: #f6e9de;
+
+  color: #85553a;
+}
+
+.backtest-warning > svg {
+  flex-shrink: 0;
+}
+
+.backtest-warning strong {
+  display: block;
+
+  font-size: 8px;
+}
+
+.backtest-warning p {
+  margin:
+    3px
+    0
+    0;
+
+  font-size: 7px;
+
+  line-height: 12px;
+}
+
+
+/* =====================================================
+   RESPONSIVE — SMALL LAPTOP
+===================================================== */
+
+@media (max-width: 1050px) {
+
+  .backtest-summary-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+  .backtest-analysis-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — TABLET
+===================================================== */
+
+@media (max-width: 800px) {
+
+  .backtest-route-table {
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+  }
+
+  .backtest-route-header,
+  .backtest-route-row {
+    min-width: 680px;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .backtest-page {
+    padding-top: 20px;
+  }
+
+  .backtest-page-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .backtest-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .backtest-period-panel {
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+  }
+
+  .backtest-days {
+    grid-column:
+      1 / -1;
+
+    padding:
+      10px
+      0
+      0;
+
+    border-left: 0;
+
+    border-top:
+      1px solid
+      #454640;
+  }
+
+  .backtest-section-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — SMALL PHONE
+===================================================== */
+
+@media (max-width: 450px) {
+
+  .backtest-panel {
+    padding: 14px;
+  }
+
+  .backtest-period-main > div {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .period-line {
+    width: 100%;
+  }
+
+  .backtest-period-main strong {
+    white-space: nowrap;
+  }
+
+}
+/* =====================================================
+   BACK-TEST LOADING / ERROR
+===================================================== */
+
+.backtest-state-screen {
+  width: 100%;
+
+  min-height:
+    calc(100vh - 120px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  text-align: center;
+
+  color:
+    var(--color-text-secondary);
+}
+
+.backtest-state-screen strong {
+  color:
+    var(--color-text);
+
+  font-family:
+    var(--font-display);
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.backtest-state-screen > span {
+  max-width: 360px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size: 9px;
+
+  line-height: 14px;
+}
+
+
+/* Loader */
+
+.backtest-loader {
+  width: 27px;
+  height: 27px;
+
+  margin-bottom: 5px;
+
+  border:
+    2px solid
+    #ded7cc;
+
+  border-top-color:
+    var(--color-accent);
+
+  border-radius: 50%;
+
+  animation:
+    backtestLoaderSpin
+    0.8s
+    linear
+    infinite;
+}
+
+@keyframes backtestLoaderSpin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+/* Error */
+
+.backtest-error-state > svg {
+  margin-bottom: 4px;
+
+  color:
+    var(--color-danger);
+}
+
+.backtest-error-state button {
+  margin-top: 8px;
+
+  padding:
+    8px
+    13px;
+
+  border: 0;
+
+  border-radius:
+    var(--radius-sm);
+
+  background:
+    var(--color-charcoal);
+
+  color: #ffffff;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.backtest-error-state button:hover {
+  background:
+    var(--color-accent);
+}

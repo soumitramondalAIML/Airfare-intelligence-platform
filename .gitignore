@@ -1,0 +1,65 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environment
+backend/.venv/
+.venv/
+venv/
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Database / Local data
+# =========================
+backend/data/*.db
+backend/data/*.sqlite
+backend/data/*.sqlite3
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Node
+# =========================
+frontend/node_modules/
+
+# Vite build output
+frontend/dist/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Playwright
+# =========================
+playwright-report/
+test-results/
+
+# =========================
+# Python coverage
+# =========================
+.coverage
+htmlcov/

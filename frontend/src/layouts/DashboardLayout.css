@@ -1,0 +1,65 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+
+  background: var(--color-background);
+}
+
+.main-area {
+  width: calc(100% - var(--sidebar-width));
+  min-height: 100vh;
+
+  margin-left: var(--sidebar-width);
+
+  transition:
+    margin-left 0.25s ease,
+    width 0.25s ease;
+}
+
+.page-content {
+  width: 100%;
+
+  padding:
+    0
+    28px
+    42px;
+}
+
+
+/* =========================================
+   TABLET / COLLAPSED SIDEBAR
+========================================= */
+
+@media (max-width: 900px) {
+  .main-area {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .page-content {
+    padding:
+      0
+      20px
+      35px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .page-content {
+    padding:
+      0
+      14px
+      30px;
+  }
+}
+@media (max-width: 900px) {
+  body .app-layout .main-area {
+    width: 100%;
+    margin-left: 0;
+  }
+}

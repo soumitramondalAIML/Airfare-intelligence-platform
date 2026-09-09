@@ -1,0 +1,1410 @@
+/* =====================================================
+   DASHBOARD PAGE
+===================================================== */
+
+.premium-dashboard {
+  width: 100%;
+  max-width: var(--page-max-width);
+
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.aviation-hero {
+  min-height: 345px;
+
+  margin:
+    24px
+    0
+    32px;
+
+  padding:
+    42px
+    42px
+    104px;
+
+  position: relative;
+  overflow: hidden;
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    radial-gradient(
+      circle at 82% 20%,
+      rgba(200, 106, 50, 0.13),
+      transparent 30%
+    ),
+    var(--color-charcoal);
+
+  box-shadow:
+    0
+    20px
+    45px
+    rgba(36, 35, 31, 0.11);
+}
+
+
+/* Old decorative AI-style glows disabled */
+
+.hero-glow {
+  display: none;
+}
+
+
+/* =====================================================
+   HERO CONTENT
+===================================================== */
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+
+  max-width: 710px;
+}
+
+.hero-badge {
+  width: fit-content;
+
+  margin-bottom: 15px;
+
+  padding:
+    6px
+    9px;
+
+  border:
+    1px solid
+    rgba(237, 222, 203, 0.35);
+
+  border-radius:
+    var(--radius-xs);
+
+  background: transparent;
+
+  color: #d8c2aa;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  text-transform: uppercase;
+}
+
+.hero-content h1 {
+  max-width: 700px;
+
+  margin: 0;
+
+  color: #fffaf0;
+
+  font-family:
+    var(--font-display);
+
+  font-size:
+    clamp(
+      32px,
+      4vw,
+      52px
+    );
+
+  font-weight: 500;
+
+  line-height: 1.08;
+
+  letter-spacing: -1.6px;
+}
+
+.hero-content h1 span {
+  display: block;
+
+  color: #d98850;
+}
+
+.hero-content > p {
+  max-width: 610px;
+
+  margin-top: 15px;
+
+  color: #bbb7ae;
+
+  font-size: 13px;
+
+  line-height: 21px;
+}
+
+
+/* =====================================================
+   HERO META
+===================================================== */
+
+.hero-meta {
+  margin-top: 21px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap:
+    12px
+    20px;
+
+  color: #aaa79e;
+
+  font-size: 10px;
+}
+
+.hero-meta > span {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #779174;
+}
+
+
+/* =====================================================
+   HERO FLIGHT PATH
+===================================================== */
+
+.hero-flight-path {
+  position: absolute;
+
+  right: 55px;
+  top: 72px;
+
+  width: 310px;
+  height: 160px;
+
+  opacity: 0.13;
+}
+
+.flight-path-line {
+  width: 250px;
+  height: 110px;
+
+  border-top:
+    1px dashed
+    rgba(255, 255, 255, 0.7);
+
+  border-radius: 50%;
+
+  transform:
+    rotate(-13deg);
+}
+
+.hero-flight-path svg {
+  position: absolute;
+
+  right: 24px;
+  top: 3px;
+
+  color: #ffffff;
+
+  transform:
+    rotate(22deg);
+}
+
+
+/* =====================================================
+   ROUTE ANALYSIS CARD
+===================================================== */
+
+.route-search-card {
+  position: absolute;
+
+  left: 36px;
+  right: 36px;
+  bottom: -4px;
+
+  z-index: 5;
+
+  min-height: 128px;
+
+  padding:
+    15px
+    18px
+    18px;
+
+  background:
+    var(--color-paper);
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius:
+    10px
+    10px
+    0
+    0;
+
+  box-shadow:
+    0
+    -8px
+    20px
+    rgba(22, 22, 19, 0.05);
+}
+
+
+/* =====================================================
+   ROUTE CARD HEADER
+===================================================== */
+
+.route-search-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 12px;
+
+  padding-bottom: 10px;
+
+  border-bottom:
+    1px solid
+    var(--color-border-light);
+}
+
+.route-search-heading strong {
+  display: block;
+
+  color:
+    var(--color-text);
+
+  font-size: 12px;
+}
+
+.route-search-heading span {
+  color:
+    var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+.analytics-tag {
+  flex-shrink: 0;
+
+  padding:
+    4px
+    7px;
+
+  border-radius:
+    var(--radius-xs);
+
+  background:
+    #f1e5d9;
+
+  color:
+    #a55228;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.7px;
+}
+
+
+/* =====================================================
+   ROUTE SEARCH GRID
+===================================================== */
+
+.route-search-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 1.4fr)
+    33px
+    minmax(180px, 1.4fr)
+    minmax(125px, 0.85fr)
+    minmax(125px, 0.85fr)
+    minmax(130px, 1fr);
+
+  grid-template-areas:
+    "origin swap destination window period analyse";
+
+  gap: 8px;
+
+  align-items: stretch;
+}
+
+
+/* Explicit grid positions */
+
+.origin-field {
+  grid-area: origin;
+}
+
+.route-swap {
+  grid-area: swap;
+}
+
+.destination-field {
+  grid-area: destination;
+}
+
+.window-field {
+  grid-area: window;
+}
+
+.period-field {
+  grid-area: period;
+
+  min-width: 0;
+}
+
+.analyse-button {
+  grid-area: analyse;
+}
+
+
+/* =====================================================
+   SEARCH FIELDS
+===================================================== */
+
+.search-field {
+  min-width: 0;
+
+  min-height: 58px;
+
+  padding:
+    8px
+    11px;
+
+  display: flex;
+  align-items: center;
+
+  text-align: left;
+
+  border:
+    1px solid
+    #ded8ce;
+
+  border-radius: 7px;
+
+  background:
+    var(--color-paper-alt);
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.search-field:hover {
+  border-color:
+    var(--color-accent);
+
+  background: #ffffff;
+}
+
+.search-field-icon {
+  min-width: 34px;
+  height: 34px;
+
+  margin-right: 9px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius:
+    var(--radius-sm);
+
+  background:
+    #f1e3d7;
+
+  color:
+    #bd642e;
+}
+
+.search-field-icon.destination {
+  background:
+    #e4e8df;
+
+  color:
+    #5e705d;
+}
+
+.search-field span {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #8c857c;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 0.9px;
+}
+
+.search-field strong {
+  display: block;
+
+  color:
+    var(--color-text);
+
+  font-size: 12px;
+}
+
+.search-field small {
+  display: block;
+
+  margin-top: 2px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size: 7px;
+}
+
+.location-field > div:last-child {
+  min-width: 0;
+}
+
+
+/* =====================================================
+   COMPACT FIELDS
+===================================================== */
+
+.compact-field {
+  justify-content: space-between;
+
+  gap: 8px;
+}
+
+.compact-field > div {
+  min-width: 0;
+}
+
+.compact-field > svg:last-child {
+  flex-shrink: 0;
+}
+
+.period-field strong,
+.window-field strong {
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   SWAP BUTTON/ICON
+===================================================== */
+
+.route-swap {
+  display: grid;
+  place-items: center;
+
+  color: #8b8175;
+}
+
+
+/* =====================================================
+   ANALYSE BUTTON
+===================================================== */
+
+.analyse-button {
+  min-width: 0;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  background:
+    var(--color-accent);
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  transition:
+    background 0.18s ease;
+}
+
+.analyse-button:hover {
+  background:
+    var(--color-accent-dark);
+}
+
+
+/* =====================================================
+   DASHBOARD SECTION HEADING
+===================================================== */
+
+.premium-page-heading {
+  margin-bottom: 17px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.premium-page-heading > div > span {
+  display: block;
+
+  color: var(--color-accent-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  line-height: 1.5;
+
+  letter-spacing: 1.5px;
+}
+
+.premium-page-heading h2 {
+  margin:
+    3px
+    0;
+
+  color:
+    var(--color-text);
+
+  font-family:
+    var(--font-display);
+
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.premium-page-heading p {
+  color:
+    var(--color-text-secondary);
+
+  font-size: 10px;
+}
+
+.updated-chip {
+  flex-shrink: 0;
+
+  padding:
+    7px
+    10px;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: 5px;
+
+  background:
+    var(--color-paper);
+
+  color:
+    var(--color-text-secondary);
+
+  font-size: 9px;
+}
+
+
+/* =====================================================
+   KPI GRID
+===================================================== */
+
+.premium-stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 14px;
+
+  margin-bottom: 16px;
+}
+
+
+/* =====================================================
+   PRIMARY ANALYTICS
+===================================================== */
+
+.analytics-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.55fr)
+    minmax(360px, 0.95fr);
+
+  gap: 15px;
+}
+
+
+/* =====================================================
+   SHARED DASHBOARD PANELS
+===================================================== */
+
+.premium-panel {
+  min-width: 0;
+
+  padding: 18px;
+
+  background:
+    var(--color-paper);
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: 10px;
+
+  box-shadow:
+    var(--shadow-card);
+}
+
+.premium-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+.panel-eyebrow {
+  color:
+    var(--color-accent-dark);
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.premium-panel-header h3 {
+  margin:
+    3px
+    0;
+
+  color:
+    var(--color-text);
+
+  font-family:
+    var(--font-display);
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.premium-panel-header p {
+  color:
+    var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+.premium-panel-header select {
+  padding:
+    7px
+    9px;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: 5px;
+
+  outline: none;
+
+  background:
+    var(--color-paper-alt);
+
+  color: #677067;
+
+  font-size: 9px;
+}
+
+
+/* =====================================================
+   VIEW ALL BUTTON
+===================================================== */
+
+.view-all-button {
+  padding:
+    6px
+    8px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: 5px;
+
+  background: transparent;
+
+  color:
+    var(--color-accent-dark);
+
+  font-size: 8px;
+}
+
+
+/* =====================================================
+   APIx TREND PANEL
+===================================================== */
+
+.trend-panel {
+  min-height: 390px;
+}
+
+.trend-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap:
+    20px
+    37px;
+
+  margin:
+    18px
+    0
+    2px;
+
+  padding:
+    10px
+    0
+    12px;
+
+  border-bottom:
+    1px solid
+    var(--color-border-light);
+}
+
+.trend-summary span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.trend-summary strong {
+  color: #243c35;
+
+  font-family:
+    var(--font-display);
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.main-chart {
+  height: 260px;
+
+  margin-top: 14px;
+}
+
+
+/* =====================================================
+   LOWER DASHBOARD GRID
+===================================================== */
+
+.lower-analytics-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.45fr)
+    minmax(300px, 0.75fr);
+
+  gap: 15px;
+
+  margin-top: 15px;
+}
+
+.lead-panel,
+.source-panel {
+  min-height: 330px;
+}
+
+
+/* =====================================================
+   LEAD-TIME PANEL
+===================================================== */
+
+.route-pill {
+  padding:
+    6px
+    8px;
+
+  border-radius:
+    var(--radius-xs);
+
+  background:
+    var(--color-olive-soft);
+
+  color: #526851;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.lead-chart {
+  height: 215px;
+
+  margin-top: 10px;
+}
+
+.lead-insight {
+  padding:
+    9px
+    11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  border-radius: 7px;
+
+  background: #f1ece3;
+}
+
+.lead-insight-icon {
+  width: 31px;
+  height: 31px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius:
+    var(--radius-sm);
+
+  background: #e5d9ca;
+
+  color: #a85b31;
+}
+
+.lead-insight strong {
+  display: block;
+
+  color: #675444;
+
+  font-size: 9px;
+}
+
+.lead-insight span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #87796d;
+
+  font-size: 7px;
+}
+
+
+/* =====================================================
+   SOURCE HEALTH
+===================================================== */
+
+.health-badge {
+  padding:
+    5px
+    7px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  border-radius: 20px;
+
+  background:
+    var(--color-olive-soft);
+
+  color: #547054;
+
+  font-size: 8px;
+}
+
+.health-badge > span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #657f64;
+}
+
+
+/* =====================================================
+   COVERAGE RING
+===================================================== */
+
+.coverage-ring-wrap {
+  display: flex;
+  justify-content: center;
+
+  margin:
+    16px
+    0;
+}
+
+.coverage-ring {
+  width: 120px;
+  height: 120px;
+
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      var(--color-accent)
+      0deg
+      332deg,
+
+      #e7e0d6
+      332deg
+      360deg
+    );
+}
+
+.coverage-ring::after {
+  content: "";
+
+  position: absolute;
+
+  width: 92px;
+  height: 92px;
+
+  border-radius: 50%;
+
+  background:
+    var(--color-paper);
+}
+
+.coverage-ring > div {
+  position: relative;
+
+  z-index: 2;
+
+  text-align: center;
+}
+
+.coverage-ring strong {
+  display: block;
+
+  color:
+    var(--color-text);
+
+  font-family:
+    var(--font-display);
+
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.coverage-ring span {
+  color:
+    var(--color-text-muted);
+
+  font-size: 7px;
+}
+
+
+/* =====================================================
+   SOURCE CHIPS
+===================================================== */
+
+.source-chips {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.source-chips > span {
+  padding:
+    5px
+    7px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  border-radius:
+    var(--radius-xs);
+
+  background: #f3efe7;
+
+  color: #706d65;
+
+  font-size: 7px;
+}
+
+.source-status-dot {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #698368;
+}
+
+
+/* =====================================================
+   RESPONSIVE — MEDIUM/LARGE LAPTOP
+
+   Instead of squeezing the Period box,
+   the controls move into two rows.
+===================================================== */
+
+@media (max-width: 1250px) {
+
+  .route-search-grid {
+    grid-template-columns:
+      minmax(0, 1fr)
+      38px
+      minmax(0, 1fr);
+
+    grid-template-areas:
+      "origin swap destination"
+      "window period analyse";
+  }
+
+  .premium-stats-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — TABLET
+===================================================== */
+
+@media (max-width: 1050px) {
+
+  .analytics-row,
+  .lower-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-flight-path {
+    display: none;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — SMALL TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .aviation-hero {
+    padding:
+      35px
+      28px
+      32px;
+  }
+
+  .route-search-card {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    bottom: auto;
+
+    margin-top: 30px;
+
+    border-radius: 10px;
+  }
+
+  .route-search-grid {
+    grid-template-columns:
+      minmax(0, 1fr)
+      38px
+      minmax(0, 1fr);
+
+    grid-template-areas:
+      "origin swap destination"
+      "window period period"
+      "analyse analyse analyse";
+  }
+
+  .analyse-button {
+    min-height: 45px;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .aviation-hero {
+    margin-top: 15px;
+
+    padding:
+      28px
+      20px
+      25px;
+
+    border-radius: 10px;
+  }
+
+  .hero-content h1 {
+    font-size: 31px;
+  }
+
+  .hero-meta {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 8px;
+  }
+
+  .route-search-card {
+    padding: 14px;
+  }
+
+  .route-search-heading {
+    align-items: flex-start;
+  }
+
+  .route-search-grid {
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+      "origin"
+      "destination"
+      "window"
+      "period"
+      "analyse";
+  }
+
+  .route-swap {
+    display: none;
+  }
+
+  .origin-field,
+  .destination-field,
+  .window-field,
+  .period-field,
+  .analyse-button {
+    width: 100%;
+  }
+
+  .analyse-button {
+    min-height: 45px;
+  }
+
+  .premium-page-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .premium-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trend-summary {
+    gap: 18px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 420px) {
+
+  .aviation-hero {
+    padding:
+      24px
+      16px;
+  }
+
+  .hero-content h1 {
+    font-size: 27px;
+  }
+
+  .premium-panel {
+    padding: 14px;
+  }
+
+}
+.period-field {
+  display: flex !important;
+  grid-area: period;
+  min-width: 0;
+}
+
+.period-field strong {
+  white-space: nowrap;
+}
+/* =====================================================
+   DASHBOARD LOADING / ERROR STATE
+===================================================== */
+
+.dashboard-state-screen {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  color: var(--color-text-secondary);
+
+  text-align: center;
+}
+
+.dashboard-state-screen strong {
+  color: var(--color-text);
+
+  font-family: var(--font-display);
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.dashboard-state-screen > span {
+  max-width: 360px;
+
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+
+  line-height: 14px;
+}
+
+
+/* Loading spinner */
+
+.dashboard-loader {
+  width: 27px;
+  height: 27px;
+
+  margin-bottom: 5px;
+
+  border:
+    2px solid
+    #ded7cc;
+
+  border-top-color:
+    var(--color-accent);
+
+  border-radius: 50%;
+
+  animation:
+    dashboardSpin
+    0.8s
+    linear
+    infinite;
+}
+
+@keyframes dashboardSpin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* Error state */
+
+.dashboard-error-state > svg {
+  margin-bottom: 4px;
+
+  color: var(--color-danger);
+}
+
+.dashboard-error-state button {
+  margin-top: 8px;
+
+  padding:
+    8px
+    13px;
+
+  border: 0;
+
+  border-radius: var(--radius-sm);
+
+  background: var(--color-charcoal);
+
+  color: #ffffff;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.dashboard-error-state button:hover {
+  background: var(--color-accent);
+}
+
+.dashboard-route-select {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dashboard-route-select option {
+  color: #1f1d19;
+  background: #fffdf8;
+}

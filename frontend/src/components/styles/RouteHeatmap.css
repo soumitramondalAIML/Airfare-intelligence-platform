@@ -1,0 +1,303 @@
+/* =====================================================
+   ROUTE HEATMAP
+===================================================== */
+
+.heatmap-panel {
+  min-width: 0;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.heatmap-table {
+  width: 100%;
+
+  margin-top:
+    17px;
+}
+
+.heatmap-header-row,
+.heatmap-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(105px, 1.55fr)
+    repeat(
+      5,
+      minmax(42px, 0.7fr)
+    );
+
+  gap: 5px;
+
+  align-items: center;
+}
+
+.heatmap-header-row {
+  margin-bottom:
+    7px;
+}
+
+.heatmap-route-header,
+.heatmap-window-header {
+  color:
+    var(--color-text-muted);
+
+  font-size:
+    7px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.5px;
+}
+
+.heatmap-window-header {
+  text-align: center;
+}
+
+
+/* =====================================================
+   ROW
+===================================================== */
+
+.heatmap-row {
+  min-height:
+    48px;
+
+  border-bottom:
+    1px solid var(--color-border-light);
+}
+
+.heatmap-row:last-child {
+  border-bottom: 0;
+}
+
+.heatmap-route strong {
+  display: block;
+
+  color:
+    #35352f;
+
+  font-size:
+    9px;
+}
+
+.heatmap-route span {
+  display: block;
+
+  margin-top:
+    2px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size:
+    6.5px;
+}
+
+
+/* =====================================================
+   HEAT CELLS
+===================================================== */
+
+.heat-cell {
+  min-height:
+    32px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius:
+    5px;
+
+  font-size:
+    8px;
+
+  font-weight:
+    700;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.heat-cell:hover {
+  transform:
+    scale(1.06);
+
+  box-shadow:
+    0
+    5px
+    12px
+    rgba(30, 28, 24, 0.09);
+}
+
+
+/* Fare decrease */
+
+.heat-very-low {
+  background:
+    #dce5da;
+
+  color:
+    #415841;
+}
+
+.heat-low {
+  background:
+    #e8ece2;
+
+  color:
+    #596755;
+}
+
+
+/* Neutral */
+
+.heat-neutral {
+  background:
+    #eee9df;
+
+  color:
+    #746e65;
+}
+
+
+/* Fare increase */
+
+.heat-medium {
+  background:
+    #f2dfcf;
+
+  color:
+    #965229;
+}
+
+.heat-high {
+  background:
+    #e7b58f;
+
+  color:
+    #793c1d;
+}
+
+.heat-very-high {
+  background:
+    #c96e39;
+
+  color:
+    #fffaf3;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.heatmap-footer {
+  margin-top:
+    14px;
+
+  padding-top:
+    12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  border-top:
+    1px solid var(--color-border-light);
+}
+
+.heatmap-scale {
+  display: flex;
+  align-items: center;
+
+  gap: 3px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size:
+    6px;
+}
+
+.scale-box {
+  width: 13px;
+  height: 7px;
+
+  border-radius:
+    2px;
+}
+
+.scale-lowest {
+  background:
+    #dce5da;
+}
+
+.scale-low {
+  background:
+    #e8ece2;
+}
+
+.scale-neutral {
+  background:
+    #eee9df;
+}
+
+.scale-high {
+  background:
+    #e7b58f;
+}
+
+.scale-highest {
+  background:
+    #c96e39;
+}
+
+.heatmap-note {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size:
+    6px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1150px) {
+  .heatmap-header-row,
+  .heatmap-row {
+    grid-template-columns:
+      minmax(100px, 1.4fr)
+      repeat(
+        5,
+        minmax(39px, 0.65fr)
+      );
+  }
+}
+
+@media (max-width: 650px) {
+  .heatmap-table {
+    overflow-x: auto;
+  }
+
+  .heatmap-header-row,
+  .heatmap-row {
+    min-width:
+      560px;
+  }
+}

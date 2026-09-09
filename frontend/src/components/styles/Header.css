@@ -1,0 +1,378 @@
+/* =====================================================
+   HEADER
+===================================================== */
+
+.premium-header {
+  height: var(--header-height);
+
+  padding:
+    0
+    29px;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background:
+    rgba(255, 253, 248, 0.97);
+
+  border-bottom:
+    1px solid var(--color-border);
+
+  backdrop-filter:
+    blur(12px);
+}
+
+
+/* =====================================================
+   LEFT SIDE
+===================================================== */
+
+.header-left {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.gov-badge {
+  flex-shrink: 0;
+
+  padding:
+    5px
+    8px;
+
+  border-radius:
+    var(--radius-xs);
+
+  background:
+    #d47a38;
+
+  color:
+    #ffffff;
+
+  font-size:
+    9px;
+
+  font-weight:
+    800;
+}
+
+.header-left > div:last-child {
+  min-width: 0;
+}
+
+.header-left p {
+  margin: 0 0 2px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size:
+    9px;
+
+  white-space:
+    nowrap;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+}
+
+.header-left strong {
+  display: block;
+
+  color:
+    var(--color-text);
+
+  font-size:
+    13px;
+}
+
+
+/* =====================================================
+   RIGHT SIDE
+===================================================== */
+
+.header-right {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+.live-data-chip,
+.header-health {
+  height: 34px;
+
+  padding:
+    0
+    10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  border:
+    1px solid var(--color-border);
+
+  border-radius:
+    var(--radius-sm);
+
+  background:
+    var(--color-paper);
+
+  color:
+    #687065;
+
+  font-size:
+    10px;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background:
+    var(--color-success);
+}
+
+.header-health svg {
+  color:
+    var(--color-success);
+}
+
+
+/* =====================================================
+   ICON BUTTON
+===================================================== */
+
+.header-icon-button {
+  width: 35px;
+  height: 35px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid var(--color-border);
+
+  border-radius:
+    var(--radius-sm);
+
+  background:
+    var(--color-paper);
+
+  color:
+    #585b54;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.header-icon-button:hover {
+  background:
+    var(--color-paper-alt);
+
+  border-color:
+    #cbc4b9;
+}
+
+
+/* =====================================================
+   REFRESH BUTTON
+===================================================== */
+
+.premium-refresh {
+  height: 35px;
+
+  padding:
+    0
+    13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border:
+    0;
+
+  border-radius:
+    var(--radius-sm);
+
+  background:
+    var(--color-charcoal);
+
+  color:
+    #ffffff;
+
+  font-size:
+    10px;
+
+  transition:
+    background 0.18s ease;
+}
+
+.premium-refresh:hover {
+  background:
+    var(--color-accent);
+}
+
+
+/* =====================================================
+   MENU BUTTON
+===================================================== */
+
+.mobile-menu-button {
+  display: none;
+
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid var(--color-border);
+
+  border-radius:
+    var(--radius-sm);
+
+  background:
+    var(--color-paper);
+
+  color:
+    var(--color-text);
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.mobile-menu-button:hover {
+  background:
+    var(--color-paper-alt);
+
+  border-color:
+    #cbc4b9;
+}
+
+
+/* =====================================================
+   TABLET / SMALL LAPTOP
+===================================================== */
+
+@media (max-width: 900px) {
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .premium-header {
+    padding:
+      0
+      20px;
+  }
+}
+
+
+/* =====================================================
+   COMPACT TABLET
+===================================================== */
+
+@media (max-width: 760px) {
+  .header-health {
+    display: none;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+  .premium-header {
+    height: 64px;
+
+    padding:
+      0
+      14px;
+  }
+
+  .gov-badge {
+    display: none;
+  }
+
+  .header-left p {
+    display: none;
+  }
+
+  .header-left strong {
+    max-width:
+      190px;
+
+    overflow:
+      hidden;
+
+    white-space:
+      nowrap;
+
+    text-overflow:
+      ellipsis;
+  }
+
+  .live-data-chip {
+    display: none;
+  }
+
+  .premium-refresh {
+    width: 36px;
+
+    padding: 0;
+
+    font-size: 0;
+  }
+
+  .premium-refresh svg {
+    margin: 0;
+  }
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 420px) {
+  .header-left strong {
+    max-width:
+      130px;
+
+    font-size:
+      11px;
+  }
+
+  .header-right {
+    gap:
+      6px;
+  }
+}

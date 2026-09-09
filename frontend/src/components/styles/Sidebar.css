@@ -1,0 +1,342 @@
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.premium-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px 15px;
+
+  background: var(--color-charcoal);
+
+  color: #ffffff;
+
+  border-right:
+    1px solid var(--color-charcoal-border);
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.premium-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding:
+    2px
+    8px
+    16px;
+}
+
+.premium-brand-logo {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: var(--color-accent);
+
+  color: #fffdf8;
+}
+
+.premium-brand h1 {
+  margin: 0;
+
+  color: #fffdf8;
+
+  font-size: 20px;
+  line-height: 19px;
+}
+
+.premium-brand span {
+  color: #c8b49f;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   PRODUCT LABEL
+===================================================== */
+
+.sidebar-product {
+  margin:
+    4px
+    7px
+    24px;
+
+  padding:
+    9px
+    10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  background:
+    var(--color-charcoal-light);
+
+  border:
+    1px solid var(--color-charcoal-border);
+
+  border-radius: 8px;
+
+  color: #aaa79f;
+
+  font-size: 10px;
+}
+
+
+/* =====================================================
+   SECTION LABELS
+===================================================== */
+
+.premium-sidebar-label {
+  margin:
+    0
+    11px
+    8px;
+
+  color: #767970;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.6px;
+}
+
+.resource-label {
+  margin-top: 25px;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.premium-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.premium-nav-item {
+  min-height: 43px;
+
+  padding:
+    0
+    12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  position: relative;
+
+  border-radius: 7px;
+
+  color: #aaa99f;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.premium-nav-item:hover {
+  background: #2b2c28;
+  color: #ffffff;
+}
+
+.premium-nav-item.active {
+  background: var(--color-background);
+
+  color: var(--color-text);
+
+  box-shadow:
+    inset 3px 0 0
+    var(--color-accent);
+}
+
+
+/* =====================================================
+   NAVIGATION STATUS DOT
+===================================================== */
+
+.nav-status {
+  width: 6px;
+  height: 6px;
+
+  margin-left: auto;
+
+  border-radius: 50%;
+
+  background: var(--color-success);
+}
+
+
+/* =====================================================
+   SECURITY CARD
+===================================================== */
+
+.sidebar-bottom-card {
+  margin-top: auto;
+
+  padding: 12px;
+
+  display: flex;
+
+  gap: 10px;
+
+  background: #292a26;
+
+  border:
+    1px solid #383934;
+
+  border-radius: 9px;
+}
+
+.sidebar-bottom-icon {
+  min-width: 33px;
+  height: 33px;
+
+  display: grid;
+  place-items: center;
+
+  background: #353a33;
+
+  color: #a8b7a1;
+
+  border-radius: 7px;
+}
+
+.sidebar-bottom-card strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #e6e1d8;
+
+  font-size: 10px;
+}
+
+.sidebar-bottom-card span {
+  display: block;
+
+  color: #85877f;
+
+  font-size: 8px;
+
+  line-height: 13px;
+}
+
+
+/* =====================================================
+   VERSION
+===================================================== */
+
+.sidebar-version {
+  padding-top: 13px;
+
+  color: #686b63;
+
+  text-align: center;
+
+  font-size: 8px;
+}
+
+
+/* =====================================================
+   MOBILE DRAWER BACKDROP
+===================================================== */
+
+.sidebar-overlay {
+  display: none;
+}
+
+
+/* =====================================================
+   TABLET / SMALL LAPTOP
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .premium-sidebar {
+    display: flex;
+
+    transform:
+      translateX(-100%);
+
+    transition:
+      transform 0.25s ease;
+
+    box-shadow:
+      14px
+      0
+      35px
+      rgba(20, 20, 17, 0.16);
+  }
+
+  .premium-sidebar.sidebar-open {
+    transform:
+      translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: block;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 900;
+
+    background:
+      rgba(24, 24, 21, 0.38);
+
+    backdrop-filter:
+      blur(2px);
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .premium-sidebar {
+    width:
+      min(
+        280px,
+        84vw
+      );
+  }
+
+}

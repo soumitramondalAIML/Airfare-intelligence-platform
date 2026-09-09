@@ -1,0 +1,1241 @@
+/* =====================================================
+   FARE EXPLORER PAGE
+===================================================== */
+
+.fare-explorer-page {
+  width: 100%;
+  max-width: var(--page-max-width);
+
+  margin: 0 auto;
+  padding-top: 28px;
+}
+
+
+/* =====================================================
+   PAGE HEADING
+===================================================== */
+
+.fare-page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+.fare-page-heading > div > span {
+  color: var(--color-accent-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.fare-page-heading h1 {
+  margin:
+    4px
+    0;
+
+  color: var(--color-text);
+
+  font-family: var(--font-display);
+
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.fare-page-heading p {
+  margin: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   EXPORT BUTTON
+===================================================== */
+
+.fare-export-button {
+  flex-shrink: 0;
+
+  height: 38px;
+
+  padding:
+    0
+    14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border: 0;
+
+  border-radius: var(--radius-sm);
+
+  background: var(--color-charcoal);
+
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  transition:
+    background 0.18s ease;
+}
+
+.fare-export-button:hover {
+  background: var(--color-accent);
+}
+
+
+/* =====================================================
+   SUMMARY STRIP
+===================================================== */
+
+.fare-summary-strip {
+  min-height: 80px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  margin-bottom: 12px;
+
+  overflow: hidden;
+
+  background: var(--color-charcoal);
+
+  border-radius: 10px;
+}
+
+.fare-summary-strip > div {
+  min-width: 0;
+
+  padding:
+    17px
+    20px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  border-right:
+    1px solid
+    var(--color-charcoal-border);
+
+  color: #bdbaaf;
+}
+
+.fare-summary-strip > div:last-child {
+  border-right: 0;
+}
+
+.fare-summary-strip svg {
+  flex-shrink: 0;
+
+  color: #c98253;
+}
+
+.fare-summary-strip span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #878981;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.fare-summary-strip strong {
+  display: block;
+
+  color: #fffaf1;
+
+  font-family: var(--font-display);
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+
+/* =====================================================
+   FILTER PANEL
+===================================================== */
+
+.fare-filter-panel {
+  display: grid;
+
+  grid-template-columns:
+    minmax(270px, 1fr)
+    minmax(130px, 0.6fr)
+    minmax(150px, 0.6fr)
+    minmax(130px, 0.6fr);
+
+  gap: 8px;
+
+  padding: 11px;
+
+  margin-bottom: 12px;
+
+  background: var(--color-paper);
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: 8px;
+}
+
+
+/* =====================================================
+   SEARCH FIELD
+===================================================== */
+
+.fare-search {
+  min-width: 0;
+  height: 39px;
+
+  padding:
+    0
+    11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  background: var(--color-paper-alt);
+
+  border:
+    1px solid
+    #ded8ce;
+
+  border-radius: var(--radius-sm);
+
+  color: #8e887f;
+}
+
+.fare-search svg {
+  flex-shrink: 0;
+}
+
+.fare-search input {
+  width: 100%;
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #373731;
+
+  font-size: 9px;
+}
+
+.fare-search input::placeholder {
+  color: #a7a096;
+}
+
+
+/* =====================================================
+   FILTER SELECT
+===================================================== */
+
+.fare-filter {
+  min-width: 0;
+  height: 39px;
+
+  padding:
+    0
+    8px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  background: var(--color-paper-alt);
+
+  border:
+    1px solid
+    #ded8ce;
+
+  border-radius: var(--radius-sm);
+}
+
+.fare-filter svg {
+  flex-shrink: 0;
+
+  color: #9e7258;
+}
+
+.fare-filter select {
+  width: 100%;
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #635f57;
+
+  font-size: 8px;
+}
+
+
+/* =====================================================
+   TABLE PANEL
+===================================================== */
+
+.fare-table-panel {
+  min-width: 0;
+
+  padding: 17px;
+
+  background: var(--color-paper);
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-card);
+}
+
+
+/* =====================================================
+   TABLE HEADING
+===================================================== */
+
+.fare-table-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 14px;
+}
+
+.fare-table-heading > div > span {
+  color: var(--color-accent-dark);
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.fare-table-heading h2 {
+  margin:
+    3px
+    0
+    0;
+
+  color: #30312b;
+
+  font-family: var(--font-display);
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.fare-table-heading > span {
+  flex-shrink: 0;
+
+  color: var(--color-text-muted);
+
+  font-size: 8px;
+}
+
+
+/* =====================================================
+   TABLE CONTAINER
+===================================================== */
+
+.fare-table-scroll {
+  width: 100%;
+}
+
+
+/* =====================================================
+   TABLE STRUCTURE
+===================================================== */
+
+.fare-table-header,
+.fare-table-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(90px, 1fr)
+    minmax(80px, 0.72fr)
+    minmax(115px, 1.1fr)
+    minmax(110px, 1.05fr)
+    minmax(65px, 0.62fr)
+    minmax(85px, 0.8fr)
+    minmax(90px, 0.8fr)
+    minmax(80px, 0.75fr);
+
+  gap: 10px;
+
+  align-items: center;
+}
+
+
+/* =====================================================
+   TABLE HEADER
+===================================================== */
+
+.fare-table-header {
+  min-height: 34px;
+
+  padding:
+    0
+    10px;
+
+  background: #f1ede5;
+
+  border-radius: 5px;
+
+  color: #858078;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 0.4px;
+}
+
+
+/* =====================================================
+   TABLE ROW
+===================================================== */
+
+.fare-table-row {
+  width: 100%;
+  min-height: 57px;
+
+  padding:
+    0
+    10px;
+
+  border: 0;
+
+  border-bottom:
+    1px solid
+    var(--color-border-light);
+
+  background: transparent;
+
+  text-align: left;
+
+  color: #44433d;
+
+  transition:
+    background 0.15s ease;
+}
+
+.fare-table-row:hover {
+  background: #faf5ed;
+}
+
+.fare-table-row:last-child {
+  border-bottom: 0;
+}
+
+
+/* =====================================================
+   TABLE TEXT
+===================================================== */
+
+.fare-table-row div {
+  min-width: 0;
+}
+
+.fare-table-row div > strong,
+.fare-table-row div > span {
+  display: block;
+}
+
+.fare-table-row strong {
+  color: #393933;
+
+  font-size: 8.5px;
+}
+
+.fare-table-row div > span {
+  margin-top: 2px;
+
+  color: var(--color-text-muted);
+
+  font-size: 6.5px;
+}
+
+
+/* =====================================================
+   ROUTE CELL
+===================================================== */
+
+.fare-route-cell {
+  display: flex !important;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.fare-route-cell strong,
+.fare-route-cell span {
+  display: inline !important;
+
+  margin: 0 !important;
+}
+
+.fare-route-cell span {
+  color: #b16a42 !important;
+}
+
+
+/* =====================================================
+   SOURCE TYPE
+===================================================== */
+
+.fare-source {
+  width: fit-content;
+
+  padding:
+    3px
+    5px;
+
+  border-radius: 3px;
+
+  background: var(--color-olive-soft);
+
+  color: #587057 !important;
+
+  font-size: 6px !important;
+}
+
+.fare-source.ota {
+  background: #efe3d8;
+
+  color: #9f5a31 !important;
+}
+
+
+/* =====================================================
+   PURCHASE WINDOW
+===================================================== */
+
+.fare-window {
+  width: fit-content;
+
+  padding:
+    4px
+    6px;
+
+  background: var(--color-paper-alt);
+
+  border:
+    1px solid
+    #ddd5c9;
+
+  border-radius: var(--radius-xs);
+
+  color: #655f57 !important;
+}
+
+
+/* =====================================================
+   TOTAL FARE
+===================================================== */
+
+.fare-total-value {
+  color: var(--color-text) !important;
+
+  font-family: var(--font-display);
+
+  font-size: 11px !important;
+
+  font-weight: 500 !important;
+}
+
+
+/* =====================================================
+   QUALITY BADGE
+===================================================== */
+
+.quality-pill {
+  width: fit-content;
+
+  padding:
+    4px
+    6px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  border-radius: var(--radius-xs);
+
+  font-size: 6.5px;
+  font-weight: 700;
+}
+
+.quality-pill > span {
+  width: 5px;
+  height: 5px;
+
+  margin: 0 !important;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.quality-pill.clean {
+  background: var(--color-olive-soft);
+
+  color: #557054;
+}
+
+.quality-pill.clean > span {
+  background: #688267;
+}
+
+.quality-pill.review {
+  background: #f2e4d7;
+
+  color: #a65d32;
+}
+
+.quality-pill.review > span {
+  background: #c16d3b;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.fare-empty {
+  min-height: 180px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 25px;
+
+  text-align: center;
+
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+
+/* =====================================================
+   DETAIL DRAWER OVERLAY
+===================================================== */
+
+.fare-drawer-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1100;
+
+  background:
+    rgba(27, 27, 24, 0.38);
+
+  backdrop-filter: blur(2px);
+}
+
+
+/* =====================================================
+   DETAIL DRAWER
+===================================================== */
+
+.fare-detail-drawer {
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  z-index: 1200;
+
+  width:
+    min(
+      410px,
+      92vw
+    );
+
+  height: 100vh;
+
+  padding: 22px;
+
+  overflow-y: auto;
+
+  background: var(--color-paper);
+
+  box-shadow:
+    -18px
+    0
+    50px
+    rgba(31, 29, 24, 0.15);
+
+  animation:
+    fareDrawerOpen
+    0.22s
+    ease;
+}
+
+@keyframes fareDrawerOpen {
+  from {
+    transform:
+      translateX(100%);
+  }
+
+  to {
+    transform:
+      translateX(0);
+  }
+}
+
+
+/* =====================================================
+   DRAWER HEADER
+===================================================== */
+
+.fare-drawer-header {
+  padding-bottom: 17px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 15px;
+
+  border-bottom:
+    1px solid
+    #e6dfd5;
+}
+
+.fare-drawer-header span {
+  color: var(--color-accent-dark);
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.fare-drawer-header h2 {
+  margin:
+    4px
+    0
+    0;
+
+  color: #30312b;
+
+  font-family: var(--font-display);
+
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.fare-drawer-header button {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid
+    #ddd6ca;
+
+  border-radius: 5px;
+
+  background: var(--color-paper-alt);
+
+  color: #5e5d56;
+}
+
+
+/* =====================================================
+   DRAWER ROUTE
+===================================================== */
+
+.drawer-route {
+  margin:
+    18px
+    0;
+
+  padding: 17px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    40px
+    minmax(0, 1fr);
+
+  align-items: center;
+
+  background: var(--color-charcoal);
+
+  border-radius: 8px;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.drawer-route div > span {
+  display: block;
+
+  color: #85877f;
+
+  font-size: 7px;
+}
+
+.drawer-route div > strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #fff9ef;
+
+  font-family: var(--font-display);
+
+  font-size: 23px;
+  font-weight: 500;
+}
+
+
+/* =====================================================
+   DRAWER SECTIONS
+===================================================== */
+
+.drawer-section {
+  padding:
+    17px
+    0;
+
+  border-bottom:
+    1px solid
+    #e9e3da;
+}
+
+.drawer-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: var(--color-accent-dark);
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+
+/* =====================================================
+   DRAWER DETAILS
+===================================================== */
+
+.drawer-detail-row,
+.drawer-fare-row {
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  color: #777269;
+}
+
+.drawer-detail-row span,
+.drawer-fare-row span {
+  font-size: 8px;
+}
+
+.drawer-detail-row strong,
+.drawer-fare-row strong {
+  flex-shrink: 0;
+
+  color: #41413b;
+
+  font-size: 8px;
+
+  text-align: right;
+}
+
+
+/* =====================================================
+   DRAWER TOTAL
+===================================================== */
+
+.drawer-total {
+  margin-top: 8px;
+
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  background: #f1ece4;
+
+  border-radius: var(--radius-sm);
+}
+
+.drawer-total span {
+  color: #716b62;
+
+  font-size: 8px;
+}
+
+.drawer-total strong {
+  color: var(--color-text);
+
+  font-family: var(--font-display);
+
+  font-size: 18px;
+  font-weight: 500;
+}
+
+
+/* =====================================================
+   DRAWER QUALITY
+===================================================== */
+
+.drawer-quality-box {
+  padding: 11px;
+
+  background: var(--color-olive-soft);
+
+  border-radius: var(--radius-sm);
+}
+
+.drawer-quality-box > div {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #557054;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.drawer-quality-box > div span {
+  width: 6px;
+  height: 6px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #668265;
+}
+
+.drawer-quality-box p {
+  margin:
+    5px
+    0
+    0;
+
+  color: #778275;
+
+  font-size: 7px;
+
+  line-height: 12px;
+}
+
+
+/* =====================================================
+   SOURCE LINK
+===================================================== */
+
+.source-link-button {
+  min-height: 38px;
+
+  margin-top: 18px;
+
+  padding:
+    0
+    12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border-radius: var(--radius-sm);
+
+  background: var(--color-charcoal);
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  transition:
+    background 0.18s ease;
+}
+
+.source-link-button:hover {
+  background: var(--color-accent);
+}
+
+
+/* =====================================================
+   RESPONSIVE — SMALL LAPTOP
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .fare-filter-panel {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+  }
+
+  .fare-table-scroll {
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+  }
+
+  .fare-table-header,
+  .fare-table-row {
+    min-width: 900px;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — TABLET
+===================================================== */
+
+@media (max-width: 800px) {
+
+  .fare-summary-strip {
+    grid-template-columns:
+      1fr;
+  }
+
+  .fare-summary-strip > div {
+    border-right: 0;
+
+    border-bottom:
+      1px solid
+      var(--color-charcoal-border);
+  }
+
+  .fare-summary-strip > div:last-child {
+    border-bottom: 0;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .fare-explorer-page {
+    padding-top: 20px;
+  }
+
+  .fare-page-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .fare-filter-panel {
+    grid-template-columns:
+      1fr;
+  }
+
+  .fare-export-button {
+    width: 100%;
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE — SMALL PHONE
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .fare-table-panel {
+    padding: 13px;
+  }
+
+  .fare-detail-drawer {
+    width: 100%;
+
+    padding:
+      18px
+      16px;
+  }
+
+  .drawer-route {
+    grid-template-columns:
+      1fr
+      30px
+      1fr;
+  }
+
+}
+/* =====================================================
+   FARE EXPLORER LOADING / ERROR
+===================================================== */
+
+.fare-state-screen {
+  width: 100%;
+
+  min-height:
+    calc(100vh - 120px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  text-align: center;
+
+  color:
+    var(--color-text-secondary);
+}
+
+.fare-state-screen strong {
+  color:
+    var(--color-text);
+
+  font-family:
+    var(--font-display);
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.fare-state-screen > span {
+  max-width: 360px;
+
+  color:
+    var(--color-text-muted);
+
+  font-size: 9px;
+
+  line-height: 14px;
+}
+
+
+/* Loader */
+
+.fare-loader {
+  width: 27px;
+  height: 27px;
+
+  margin-bottom: 5px;
+
+  border:
+    2px solid
+    #ded7cc;
+
+  border-top-color:
+    var(--color-accent);
+
+  border-radius: 50%;
+
+  animation:
+    fareLoaderSpin
+    0.8s
+    linear
+    infinite;
+}
+
+@keyframes fareLoaderSpin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+/* Error */
+
+.fare-error-state > svg {
+  margin-bottom: 4px;
+
+  color:
+    var(--color-danger);
+}
+
+.fare-error-state button {
+  margin-top: 8px;
+
+  padding:
+    8px
+    13px;
+
+  border: 0;
+
+  border-radius:
+    var(--radius-sm);
+
+  background:
+    var(--color-charcoal);
+
+  color: #ffffff;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.fare-error-state button:hover {
+  background:
+    var(--color-accent);
+}
