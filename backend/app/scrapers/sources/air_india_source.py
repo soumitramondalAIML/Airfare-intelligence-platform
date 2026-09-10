@@ -1,5 +1,6 @@
 import re
 import time
+import os
 
 from datetime import (
     datetime,
@@ -729,10 +730,18 @@ def collect_air_india():
     with sync_playwright() as (
         playwright
     ):
+        headless = (
+           os.getenv(
+               "PLAYWRIGHT_HEADLESS",
+               "false",
+            ).lower()
+            == "true"
+       )
+
         browser = (
-            playwright.firefox.launch(
-                headless=False,
-            )
+           playwright.firefox.launch(
+               headless=headless,
+         )
         )
 
         context = (
