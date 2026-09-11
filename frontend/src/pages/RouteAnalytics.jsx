@@ -77,23 +77,28 @@ const routeOptions = [
 
 
 function average(values) {
+
   if (!values.length) {
     return 0;
   }
 
   return (
     values.reduce(
-      (sum, value) => sum + Number(value || 0),
+      (sum, value) =>
+        sum + Number(value || 0),
       0
     ) / values.length
   );
+
 }
 
 
 function RouteAnalytics() {
 
-  const [searchParams, setSearchParams] =
-    useSearchParams();
+  const [
+    searchParams,
+    setSearchParams,
+  ] = useSearchParams();
 
 
   const queryOrigin =
@@ -109,32 +114,52 @@ function RouteAnalytics() {
     searchParams.get("period") || "30";
 
 
-  const [selectedRoute, setSelectedRoute] =
-    useState(
-      `${queryOrigin}-${queryDestination}`
-    );
+  const [
+    selectedRoute,
+    setSelectedRoute,
+  ] = useState(
+    `${queryOrigin}-${queryDestination}`
+  );
 
-  const [selectedWindow, setSelectedWindow] =
-    useState(
-      purchaseWindows.includes(queryWindow)
-        ? queryWindow
-        : "T+7"
-    );
 
-  const [selectedPeriod, setSelectedPeriod] =
-    useState(queryPeriod);
+  const [
+    selectedWindow,
+    setSelectedWindow,
+  ] = useState(
+    purchaseWindows.includes(queryWindow)
+      ? queryWindow
+      : "T+7"
+  );
 
-  const [data, setData] =
-    useState(null);
 
-  const [fares, setFares] =
-    useState([]);
+  const [
+    selectedPeriod,
+    setSelectedPeriod,
+  ] = useState(queryPeriod);
 
-  const [loading, setLoading] =
-    useState(true);
 
-  const [error, setError] =
-    useState(null);
+  const [
+    data,
+    setData,
+  ] = useState(null);
+
+
+  const [
+    fares,
+    setFares,
+  ] = useState([]);
+
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
+
+
+  const [
+    error,
+    setError,
+  ] = useState(null);
 
 
   /* =========================================
@@ -145,12 +170,14 @@ function RouteAnalytics() {
 
     let active = true;
 
+
     async function loadRoute() {
 
       try {
 
         setLoading(true);
         setError(null);
+
 
         const [
           origin,
@@ -177,8 +204,10 @@ function RouteAnalytics() {
 
 
         if (active) {
+
           setData(routeData);
           setFares(fareData);
+
         }
 
       } catch (err) {
@@ -188,16 +217,21 @@ function RouteAnalytics() {
           err
         );
 
+
         if (active) {
+
           setError(
             "Route analytics could not be loaded."
           );
+
         }
 
       } finally {
 
         if (active) {
+
           setLoading(false);
+
         }
 
       }
@@ -209,7 +243,9 @@ function RouteAnalytics() {
 
 
     return () => {
+
       active = false;
+
     };
 
   }, [
@@ -317,6 +353,7 @@ function RouteAnalytics() {
 
       const groups = {};
 
+
       selectedWindowFares.forEach(
         (fare) => {
 
@@ -325,17 +362,33 @@ function RouteAnalytics() {
               fare.collectedAt || ""
             ).split("T")[0];
 
+
           if (!date) {
             return;
           }
+
 
           if (!groups[date]) {
             groups[date] = [];
           }
 
-          groups[date].push(
-            Number(fare.totalFare || 0)
-          );
+
+          const totalFare =
+            Number(
+              fare.totalFare
+            );
+
+
+          if (
+            Number.isFinite(totalFare) &&
+            totalFare > 0
+          ) {
+
+            groups[date].push(
+              totalFare
+            );
+
+          }
 
         }
       );
@@ -345,10 +398,13 @@ function RouteAnalytics() {
         Object.entries(groups)
           .map(
             ([date, values]) => ({
+
               date,
+
               fare: Math.round(
                 average(values)
               ),
+
             })
           )
           .sort(
@@ -361,6 +417,7 @@ function RouteAnalytics() {
 
       const period =
         Number(selectedPeriod);
+
 
       return history.slice(
         -period
@@ -386,16 +443,33 @@ function RouteAnalytics() {
             selectedWindow
         )?.fare;
 
-      if (fromLeadTime) {
-        return fromLeadTime;
+
+      if (
+        Number.isFinite(
+          Number(fromLeadTime)
+        ) &&
+        Number(fromLeadTime) > 0
+      ) {
+
+        return Number(fromLeadTime);
+
       }
 
-      return average(
-        selectedWindowFares.map(
-          (fare) =>
-            fare.totalFare
-        )
-      );
+
+      const validTotals =
+        selectedWindowFares
+          .map(
+            (fare) =>
+              Number(fare.totalFare)
+          )
+          .filter(
+            (value) =>
+              Number.isFinite(value) &&
+              value > 0
+          );
+
+
+      return average(validTotals);
 
     }, [
       leadTimes,
@@ -405,7 +479,7 @@ function RouteAnalytics() {
 
 
   /* =========================================
-     FARE BREAKDOWN
+     FARE COMPOSITION
   ========================================= */
 
   const fareBreakdown =
@@ -414,12 +488,16 @@ function RouteAnalytics() {
       if (
         selectedWindowFares.length === 0
       ) {
+
         return {
-          baseFare: 0,
-          taxes: 0,
-          udf: 0,
-          convenienceFee: 0,
+
+          baseFare: null,
+          taxes: null,
+          udf: null,
+          convenienceFee: null,
+
         };
+
       }
 
 
@@ -440,15 +518,46 @@ function RouteAnalytics() {
           (fare) =>
             String(
               fare.collectedAt || ""
-            ).split("T")[0]
-            === latestDate
+            ).split("T")[0] ===
+            latestDate
         );
+
+
+      const getAverageIfAvailable = (
+        values
+      ) => {
+
+        const validValues =
+          values
+            .map(
+              (value) =>
+                Number(value)
+            )
+            .filter(
+              (value) =>
+                Number.isFinite(value) &&
+                value > 0
+            );
+
+
+        if (
+          validValues.length === 0
+        ) {
+
+          return null;
+
+        }
+
+
+        return average(validValues);
+
+      };
 
 
       return {
 
         baseFare:
-          average(
+          getAverageIfAvailable(
             latestFares.map(
               (fare) =>
                 fare.baseFare
@@ -456,7 +565,7 @@ function RouteAnalytics() {
           ),
 
         taxes:
-          average(
+          getAverageIfAvailable(
             latestFares.map(
               (fare) =>
                 fare.taxes
@@ -464,7 +573,7 @@ function RouteAnalytics() {
           ),
 
         udf:
-          average(
+          getAverageIfAvailable(
             latestFares.map(
               (fare) =>
                 fare.udf
@@ -472,7 +581,7 @@ function RouteAnalytics() {
           ),
 
         convenienceFee:
-          average(
+          getAverageIfAvailable(
             latestFares.map(
               (fare) =>
                 fare.convenienceFee
@@ -481,14 +590,76 @@ function RouteAnalytics() {
 
       };
 
-    }, [selectedWindowFares]);
+    }, [
+      selectedWindowFares,
+    ]);
 
+
+  /* =========================================
+     TOTAL OBSERVED FARE
+  ========================================= */
 
   const totalFare =
-    fareBreakdown.baseFare +
-    fareBreakdown.taxes +
-    fareBreakdown.udf +
-    fareBreakdown.convenienceFee;
+    useMemo(() => {
+
+      if (
+        selectedWindowFares.length === 0
+      ) {
+
+        return 0;
+
+      }
+
+
+      const latestDate =
+        [...selectedWindowFares]
+          .map(
+            (fare) =>
+              String(
+                fare.collectedAt || ""
+              ).split("T")[0]
+          )
+          .sort()
+          .at(-1);
+
+
+      const latestFares =
+        selectedWindowFares.filter(
+          (fare) =>
+            String(
+              fare.collectedAt || ""
+            ).split("T")[0] ===
+            latestDate
+        );
+
+
+      const validTotals =
+        latestFares
+          .map(
+            (fare) =>
+              Number(fare.totalFare)
+          )
+          .filter(
+            (value) =>
+              Number.isFinite(value) &&
+              value > 0
+          );
+
+
+      if (
+        validTotals.length === 0
+      ) {
+
+        return 0;
+
+      }
+
+
+      return average(validTotals);
+
+    }, [
+      selectedWindowFares,
+    ]);
 
 
   /* =========================================
@@ -510,8 +681,12 @@ function RouteAnalytics() {
   const monthlyChange =
     useMemo(() => {
 
-      if (indexHistory.length < 2) {
+      if (
+        indexHistory.length < 2
+      ) {
+
         return 0;
+
       }
 
 
@@ -520,6 +695,7 @@ function RouteAnalytics() {
           indexHistory.at(-1)?.index ||
           0
         );
+
 
       const reference =
         Number(
@@ -533,21 +709,28 @@ function RouteAnalytics() {
 
 
       if (!reference) {
+
         return 0;
+
       }
 
 
       return Number(
         (
           (
-            (last - reference)
-            / reference
-          )
-          * 100
+            (
+              last -
+              reference
+            ) /
+            reference
+          ) *
+          100
         ).toFixed(2)
       );
 
-    }, [indexHistory]);
+    }, [
+      indexHistory,
+    ]);
 
 
   /* =========================================
@@ -560,9 +743,15 @@ function RouteAnalytics() {
       if (
         selectedWindowFares.length === 0
       ) {
+
         return [];
+
       }
 
+
+      /* -----------------------------------------
+         Find latest collection date
+      ----------------------------------------- */
 
       const latestDate =
         [...selectedWindowFares]
@@ -576,16 +765,135 @@ function RouteAnalytics() {
           .at(-1);
 
 
-      return selectedWindowFares
-        .filter(
+      /* -----------------------------------------
+         Keep latest observations
+      ----------------------------------------- */
+
+      const latestFares =
+        selectedWindowFares.filter(
           (fare) =>
             String(
               fare.collectedAt || ""
-            ).split("T")[0]
-            === latestDate
-        )
-        .map(
-          (fare) => ({
+            ).split("T")[0] ===
+            latestDate
+        );
+
+
+      /* -----------------------------------------
+         Calculate movement
+      ----------------------------------------- */
+
+      return latestFares.map(
+        (fare) => {
+
+          const currentFare =
+            Number(
+              fare.totalFare || 0
+            );
+
+
+          /*
+            Find the most recent previous
+            comparable observation.
+
+            Comparison remains within:
+
+            - same carrier
+            - same source
+            - same route
+            - same T+ window
+            - same fare series
+          */
+
+          const previousFares =
+            selectedWindowFares
+              .filter(
+                (previous) => {
+
+                  const previousDate =
+                    String(
+                      previous.collectedAt || ""
+                    ).split("T")[0];
+
+
+                  return (
+
+                    previous !== fare &&
+
+                    previousDate !==
+                      latestDate &&
+
+                    (
+                      previous.carrier ||
+                      ""
+                    ) === (
+                      fare.carrier ||
+                      ""
+                    ) &&
+
+                    (
+                      previous.source ||
+                      ""
+                    ) === (
+                      fare.source ||
+                      ""
+                    ) &&
+
+                    Number(
+                      previous.totalFare || 0
+                    ) > 0
+
+                  );
+
+                }
+              )
+              .sort(
+                (a, b) =>
+                  new Date(
+                    b.collectedAt || 0
+                  ) -
+                  new Date(
+                    a.collectedAt || 0
+                  )
+              );
+
+
+          const previousFare =
+            Number(
+              previousFares[0]?.totalFare ||
+              0
+            );
+
+
+          /*
+            Movement formula:
+
+            ((Current - Previous) / Previous)
+            × 100
+          */
+
+          let change = null;
+
+
+          if (
+            currentFare > 0 &&
+            previousFare > 0
+          ) {
+
+            change =
+              (
+                (
+                  currentFare -
+                  previousFare
+                ) /
+                previousFare
+              ) *
+              100;
+
+          }
+
+
+          return {
 
             carrier:
               fare.carrier ||
@@ -606,16 +914,18 @@ function RouteAnalytics() {
               "",
 
             fare:
-              Number(
-                fare.totalFare || 0
-              ),
+              currentFare,
 
-            change: 0,
+            change,
 
-          })
-        );
+          };
 
-    }, [selectedWindowFares]);
+        }
+      );
+
+    }, [
+      selectedWindowFares,
+    ]);
 
 
   /* =========================================
@@ -635,21 +945,27 @@ function RouteAnalytics() {
 
 
     setSearchParams({
+
       origin,
       destination,
       window,
       period,
+
     });
 
   }
 
 
-  function handleRouteChange(event) {
+  function handleRouteChange(
+    event
+  ) {
 
     const value =
       event.target.value;
 
+
     setSelectedRoute(value);
+
 
     updateUrl(
       value,
@@ -660,9 +976,14 @@ function RouteAnalytics() {
   }
 
 
-  function handleWindowChange(window) {
+  function handleWindowChange(
+    window
+  ) {
 
-    setSelectedWindow(window);
+    setSelectedWindow(
+      window
+    );
+
 
     updateUrl(
       selectedRoute,
@@ -673,12 +994,18 @@ function RouteAnalytics() {
   }
 
 
-  function handlePeriodChange(event) {
+  function handlePeriodChange(
+    event
+  ) {
 
     const value =
       event.target.value;
 
-    setSelectedPeriod(value);
+
+    setSelectedPeriod(
+      value
+    );
+
 
     updateUrl(
       selectedRoute,
@@ -690,38 +1017,65 @@ function RouteAnalytics() {
 
 
   /* =========================================
-     LOADING / ERROR
+     LOADING
   ========================================= */
 
   if (loading) {
 
     return (
+
       <div className="route-analytics-page">
+
         <div className="route-data-status">
+
           Loading route analytics...
+
         </div>
+
       </div>
+
     );
 
   }
 
 
-  if (error || !data) {
+  /* =========================================
+     ERROR
+  ========================================= */
+
+  if (
+    error ||
+    !data
+  ) {
 
     return (
+
       <div className="route-analytics-page">
+
         <div className="route-data-status">
-          {error ||
-            "No route data available."}
+
+          {
+            error ||
+            "No route data available."
+          }
+
         </div>
+
       </div>
+
     );
 
   }
 
 
+  /* =========================================
+     PAGE
+  ========================================= */
+
   return (
+
     <div className="route-analytics-page">
+
 
       {/* PAGE HEADER */}
 
@@ -730,23 +1084,36 @@ function RouteAnalytics() {
         <div>
 
           <span className="route-page-eyebrow">
+
             SECTOR ANALYSIS
+
           </span>
 
+
           <h1>
+
             Route Analytics
+
           </h1>
 
+
           <p>
-            Examine route-level airfare behaviour across
-            advance-purchase windows and collection sources.
+
+            Examine route-level airfare behaviour
+            across advance-purchase windows and
+            collection sources.
+
           </p>
 
         </div>
 
+
         <div className="route-data-status">
+
           <span></span>
+
           Latest collection available
+
         </div>
 
       </div>
@@ -758,17 +1125,23 @@ function RouteAnalytics() {
 
         <div className="selector-route">
 
+
           <div className="airport-block">
 
-            <span>ORIGIN</span>
+            <span>
+              ORIGIN
+            </span>
+
 
             <strong>
               {originInfo.code}
             </strong>
 
+
             <p>
               {originInfo.city}
             </p>
+
 
             <small>
               {originInfo.airport}
@@ -781,8 +1154,11 @@ function RouteAnalytics() {
 
             <div className="route-line"></div>
 
+
             <div className="route-plane">
+
               <PlaneTakeoff size={19} />
+
             </div>
 
           </div>
@@ -790,15 +1166,20 @@ function RouteAnalytics() {
 
           <div className="airport-block destination-block">
 
-            <span>DESTINATION</span>
+            <span>
+              DESTINATION
+            </span>
+
 
             <strong>
               {destinationInfo.code}
             </strong>
 
+
             <p>
               {destinationInfo.city}
             </p>
+
 
             <small>
               {destinationInfo.airport}
@@ -811,9 +1192,13 @@ function RouteAnalytics() {
 
         <div className="route-selector-controls">
 
+
           <label>
 
-            <span>ROUTE</span>
+            <span>
+              ROUTE
+            </span>
+
 
             <select
               value={selectedRoute}
@@ -829,7 +1214,9 @@ function RouteAnalytics() {
                     key={route.code}
                     value={route.code}
                   >
+
                     {route.label}
+
                   </option>
 
                 )
@@ -846,6 +1233,7 @@ function RouteAnalytics() {
               REFERENCE PERIOD
             </span>
 
+
             <select
               value={selectedPeriod}
               onChange={
@@ -857,9 +1245,11 @@ function RouteAnalytics() {
                 Last 7 days
               </option>
 
+
               <option value="30">
                 Last 30 days
               </option>
+
 
               <option value="90">
                 Last 3 months
@@ -874,11 +1264,13 @@ function RouteAnalytics() {
 
             <Database size={16} />
 
+
             <div>
 
               <span>
                 OBSERVATIONS
               </span>
+
 
               <strong>
                 {fares.length}
@@ -900,12 +1292,17 @@ function RouteAnalytics() {
         <div>
 
           <span className="purchase-label">
+
             ADVANCE-PURCHASE WINDOW
+
           </span>
 
+
           <p>
-            Choose how many days before departure the
-            airfare was observed.
+
+            Choose how many days before departure
+            the airfare was observed.
+
           </p>
 
         </div>
@@ -920,8 +1317,7 @@ function RouteAnalytics() {
                 type="button"
                 key={window}
                 className={
-                  selectedWindow ===
-                  window
+                  selectedWindow === window
                     ? "window-option active"
                     : "window-option"
                 }
@@ -936,14 +1332,16 @@ function RouteAnalytics() {
                   {window}
                 </strong>
 
+
                 <span>
 
-                  {window === "T+1"
-                    ? "1 day"
-                    : `${window.replace(
-                        "T+",
-                        ""
-                      )} days`
+                  {
+                    window === "T+1"
+                      ? "1 day"
+                      : `${window.replace(
+                          "T+",
+                          ""
+                        )} days`
                   }
 
                 </span>
@@ -962,20 +1360,25 @@ function RouteAnalytics() {
 
       <div className="route-summary-grid">
 
+
         <article>
 
           <span>
             Observed Fare
           </span>
 
+
           <strong>
+
             ₹
             {Math.round(
               selectedFare
             ).toLocaleString(
               "en-IN"
             )}
+
           </strong>
+
 
           <small>
             Selected {selectedWindow} window
@@ -990,9 +1393,11 @@ function RouteAnalytics() {
             Route APIx
           </span>
 
+
           <strong>
             {currentIndex.toFixed(2)}
           </strong>
+
 
           <small>
             Route price index
@@ -1007,6 +1412,7 @@ function RouteAnalytics() {
             Daily Movement
           </span>
 
+
           <strong
             className={
               Number(data.change) >= 0
@@ -1015,26 +1421,32 @@ function RouteAnalytics() {
             }
           >
 
-            {Number(data.change) >= 0
-              ? (
-                <TrendingUp size={18} />
-              )
-              : (
-                <TrendingDown size={18} />
-              )
+            {
+              Number(data.change) >= 0
+                ? (
+                  <TrendingUp size={18} />
+                )
+                : (
+                  <TrendingDown size={18} />
+                )
             }
 
-            {Number(data.change) >= 0
-              ? "+"
-              : ""
+
+            {
+              Number(data.change) >= 0
+                ? "+"
+                : ""
             }
+
 
             {Number(
               data.change || 0
             ).toFixed(2)}
+
             %
 
           </strong>
+
 
           <small>
             vs previous collection
@@ -1049,6 +1461,7 @@ function RouteAnalytics() {
             30-Day Movement
           </span>
 
+
           <strong
             className={
               monthlyChange >= 0
@@ -1057,14 +1470,16 @@ function RouteAnalytics() {
             }
           >
 
-            {monthlyChange >= 0
-              ? "+"
-              : ""
+            {
+              monthlyChange >= 0
+                ? "+"
+                : ""
             }
 
             {monthlyChange}%
 
           </strong>
+
 
           <small>
             monthly movement
@@ -1087,15 +1502,21 @@ function RouteAnalytics() {
               PRICE HISTORY
             </span>
 
+
             <h2>
+
               Fare movement ·{" "}
               {originInfo.code} →{" "}
               {destinationInfo.code}
+
             </h2>
 
+
             <p>
+
               Historical average fare for the
               selected booking window.
+
             </p>
 
           </div>
@@ -1105,9 +1526,12 @@ function RouteAnalytics() {
 
             <MapPin size={14} />
 
+
             {originInfo.city}
 
+
             <ArrowRight size={13} />
+
 
             {destinationInfo.city}
 
@@ -1142,6 +1566,7 @@ function RouteAnalytics() {
                     stopColor="#C86A32"
                     stopOpacity={0.22}
                   />
+
 
                   <stop
                     offset="100%"
@@ -1190,12 +1615,15 @@ function RouteAnalytics() {
 
               <Tooltip
                 formatter={(value) => [
+
                   `₹${Number(
                     value
                   ).toLocaleString(
                     "en-IN"
                   )}`,
+
                   "Average Fare",
+
                 ]}
               />
 
@@ -1221,6 +1649,7 @@ function RouteAnalytics() {
 
       <div className="route-analysis-grid">
 
+
         {/* LEAD TIME */}
 
         <section className="route-subpanel">
@@ -1233,16 +1662,18 @@ function RouteAnalytics() {
                 LEAD-TIME ELASTICITY
               </span>
 
+
               <h2>
                 Fare by booking window
               </h2>
 
+
               <p>
-                Average fare as departure
-                approaches.
+                Average fare as departure approaches.
               </p>
 
             </div>
+
 
             <CalendarDays size={19} />
 
@@ -1268,11 +1699,13 @@ function RouteAnalytics() {
                   strokeDasharray="3 3"
                 />
 
+
                 <XAxis
                   dataKey="window"
                   axisLine={false}
                   tickLine={false}
                 />
+
 
                 <YAxis
                   axisLine={false}
@@ -1284,16 +1717,21 @@ function RouteAnalytics() {
                   }
                 />
 
+
                 <Tooltip
                   formatter={(value) => [
+
                     `₹${Number(
                       value
                     ).toLocaleString(
                       "en-IN"
                     )}`,
+
                     "Fare",
+
                   ]}
                 />
+
 
                 <Bar
                   dataKey="fare"
@@ -1315,9 +1753,10 @@ function RouteAnalytics() {
         </section>
 
 
-        {/* FARE BREAKDOWN */}
+        {/* FARE COMPOSITION */}
 
         <section className="route-subpanel">
+
 
           <div className="route-section-heading">
 
@@ -1327,9 +1766,11 @@ function RouteAnalytics() {
                 FARE STRUCTURE
               </span>
 
+
               <h2>
                 Fare composition
               </h2>
+
 
               <p>
                 Components contributing to the
@@ -1337,6 +1778,7 @@ function RouteAnalytics() {
               </p>
 
             </div>
+
 
             <IndianRupee size={19} />
 
@@ -1349,13 +1791,16 @@ function RouteAnalytics() {
               TOTAL FARE
             </span>
 
+
             <strong>
+
               ₹
               {Math.round(
                 totalFare
               ).toLocaleString(
                 "en-IN"
               )}
+
             </strong>
 
           </div>
@@ -1363,63 +1808,105 @@ function RouteAnalytics() {
 
           <div className="fare-component-list">
 
+
             <div>
-              <span>Base fare</span>
+
+              <span>
+                Base fare
+              </span>
+
 
               <strong>
-                ₹
-                {Math.round(
-                  fareBreakdown.baseFare
-                ).toLocaleString(
-                  "en-IN"
-                )}
+
+                {
+                  fareBreakdown.baseFare === null
+                    ? "N/A"
+                    : `₹${Math.round(
+                        fareBreakdown.baseFare
+                      ).toLocaleString(
+                        "en-IN"
+                      )}`
+                }
+
               </strong>
+
             </div>
 
+
             <div>
-              <span>Taxes</span>
+
+              <span>
+                Taxes
+              </span>
+
 
               <strong>
-                ₹
-                {Math.round(
-                  fareBreakdown.taxes
-                ).toLocaleString(
-                  "en-IN"
-                )}
+
+                {
+                  fareBreakdown.taxes === null
+                    ? "N/A"
+                    : `₹${Math.round(
+                        fareBreakdown.taxes
+                      ).toLocaleString(
+                        "en-IN"
+                      )}`
+                }
+
               </strong>
+
             </div>
 
+
             <div>
+
               <span>
                 User Development Fee
               </span>
 
+
               <strong>
-                ₹
-                {Math.round(
-                  fareBreakdown.udf
-                ).toLocaleString(
-                  "en-IN"
-                )}
+
+                {
+                  fareBreakdown.udf === null
+                    ? "N/A"
+                    : `₹${Math.round(
+                        fareBreakdown.udf
+                      ).toLocaleString(
+                        "en-IN"
+                      )}`
+                }
+
               </strong>
+
             </div>
 
+
             <div>
+
               <span>
                 Convenience charge
               </span>
 
+
               <strong>
-                ₹
-                {Math.round(
-                  fareBreakdown.convenienceFee
-                ).toLocaleString(
-                  "en-IN"
-                )}
+
+                {
+                  fareBreakdown.convenienceFee === null
+                    ? "N/A"
+                    : `₹${Math.round(
+                        fareBreakdown.convenienceFee
+                      ).toLocaleString(
+                        "en-IN"
+                      )}`
+                }
+
               </strong>
+
             </div>
 
+
           </div>
+
 
         </section>
 
@@ -1430,6 +1917,7 @@ function RouteAnalytics() {
 
       <section className="carrier-panel">
 
+
         <div className="route-section-heading">
 
           <div>
@@ -1438,9 +1926,11 @@ function RouteAnalytics() {
               SOURCE COMPARISON
             </span>
 
+
             <h2>
               Carrier & portal comparison
             </h2>
+
 
             <p>
               Compare observed fares collected
@@ -1454,11 +1944,28 @@ function RouteAnalytics() {
 
         <div className="carrier-table">
 
+
           <div className="carrier-table-header">
-            <span>Carrier / Source</span>
-            <span>Type</span>
-            <span>Observed Fare</span>
-            <span>Movement</span>
+
+            <span>
+              Carrier / Source
+            </span>
+
+
+            <span>
+              Type
+            </span>
+
+
+            <span>
+              Observed Fare
+            </span>
+
+
+            <span>
+              Movement
+            </span>
+
           </div>
 
 
@@ -1472,21 +1979,32 @@ function RouteAnalytics() {
                 }
               >
 
+
                 <div className="carrier-name">
 
+
                   <div>
-                    {carrier.carrier
-                      .charAt(0)}
+
+                    {
+                      carrier.carrier
+                        .charAt(0)
+                    }
+
                   </div>
 
+
                   <strong>
+
                     {carrier.carrier}
+
                   </strong>
+
 
                 </div>
 
 
                 <div>
+
 
                   <span
                     className={
@@ -1496,35 +2014,61 @@ function RouteAnalytics() {
                         : "source-type"
                     }
                   >
+
                     {carrier.source}
+
                   </span>
+
 
                 </div>
 
 
                 <strong>
+
                   ₹
                   {Math.round(
                     carrier.fare
                   ).toLocaleString(
                     "en-IN"
                   )}
+
                 </strong>
 
 
                 <strong
-                  className="route-positive"
+                  className={
+                    carrier.change === null
+                      ? "route-neutral"
+                      : carrier.change > 0
+                      ? "route-negative"
+                      : carrier.change < 0
+                      ? "route-positive"
+                      : "route-neutral"
+                  }
                 >
-                  {carrier.change.toFixed(
-                    2
-                  )}
-                  %
+
+                  {
+                    carrier.change === null
+                      ? "N/A"
+                      : `${
+                          carrier.change > 0
+                            ? "+"
+                            : ""
+                        }${
+                          carrier.change.toFixed(
+                            2
+                          )
+                        }%`
+                  }
+
                 </strong>
+
 
               </div>
 
             )
           )}
+
 
         </div>
 
@@ -1532,12 +2076,17 @@ function RouteAnalytics() {
 
 
       <div className="mock-data-note">
+
         Live backend integration · Historical demo
         observations are synthetic prototype data.
+
       </div>
 
+
     </div>
+
   );
+
 }
 
 

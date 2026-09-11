@@ -21,6 +21,20 @@ import {
 
 import "./styles/FareExplorer.css";
 
+function formatOptionalFare(value) {
+  if (
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    Number(value) <= 0 ||
+    Number.isNaN(Number(value))
+  ) {
+    return "N/A";
+  }
+
+  return `₹${Number(value).toLocaleString("en-IN")}`;
+}
+
 
 function FareExplorer() {
 
@@ -854,12 +868,7 @@ function FareExplorer() {
 
 
                 <strong>
-                  ₹
-                  {Number(
-                    fare.baseFare
-                  ).toLocaleString(
-                    "en-IN"
-                  )}
+                  {formatOptionalFare(fare.baseFare)}
                 </strong>
 
 
@@ -917,8 +926,8 @@ function FareExplorer() {
 
       <div className="mock-data-note">
 
-        Prototype Fare Explorer · Records currently
-        shown are mock frontend data.
+        Fare Explorer · Records shown are loaded from
+        the connected airfare data API.
 
       </div>
 
@@ -1093,12 +1102,7 @@ function FareExplorer() {
                 </span>
 
                 <strong>
-                  ₹
-                  {Number(
-                    selectedFare.baseFare
-                  ).toLocaleString(
-                    "en-IN"
-                  )}
+                  {formatOptionalFare(selectedFare.baseFare)}
                 </strong>
 
               </div>
@@ -1129,12 +1133,7 @@ function FareExplorer() {
                 </span>
 
                 <strong>
-                  ₹
-                  {Number(
-                    selectedFare.udf
-                  ).toLocaleString(
-                    "en-IN"
-                  )}
+                  {formatOptionalFare(selectedFare.udf)}
                 </strong>
 
               </div>
@@ -1166,12 +1165,7 @@ function FareExplorer() {
                 </span>
 
                 <strong>
-                  ₹
-                  {Number(
-                    selectedFare.totalFare
-                  ).toLocaleString(
-                    "en-IN"
-                  )}
+                  {formatOptionalFare(selectedFare.totalFare)}
                 </strong>
 
               </div>

@@ -780,7 +780,7 @@ export async function getFares(
         baseFare:
           fare.baseFare ??
           fare.base_fare ??
-          0,
+          null,
 
 
         taxes:
